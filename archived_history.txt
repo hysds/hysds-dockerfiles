@@ -1,0 +1,628 @@
+commit 61b99595bdbb5f82370c76022ae55ca81cc4ec85
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri Sep 8 16:54:58 2017 +0000
+
+    update pyaps
+
+commit 60b7a4c92c1f129826d3e39cd93d2a82678523d1
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Aug 15 01:09:17 2017 +0000
+
+    update pyasn to avoid contextualversionconflict
+
+commit 2f5f3f13335773b9c5e208f680d510eed358f2cf
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 13 06:24:37 2017 +0000
+
+    uninstall flower before reinstalling hysds to avoid ContextualVersionConflict
+
+commit 4e5d13fff357f76d069252a9bf2634a9b18ebc59
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 13 05:49:34 2017 +0000
+
+    install third_party celery
+
+commit 31567e0fff01980a0fccb978686ce58406eabec5
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 13 05:44:51 2017 +0000
+
+    prevent docker startup via systemctl
+
+commit 6bc6b489aa5c2c52490062fb7680eab0473459d3
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jun 20 16:43:21 2017 +0000
+
+    export verdi image
+
+commit ab88324354ae337501aff0b51858820390c1b0e6
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jun 20 15:43:36 2017 +0000
+
+    add script to update and rebuild all images
+
+commit 98e6db3ee30774ffdfb743549a7b18c3f3891079
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Mar 21 16:16:08 2017 +0000
+
+    set hysds work dir
+
+commit 44402c7b2c6a357ce6a84ad06d19ea18a9fea95c
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 18:45:49 2017 -0700
+
+    restored; fixed in puppet modules
+
+commit c4df7807b8203eb189027d00fe77bf0c15c52dd0
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 18:28:42 2017 -0700
+
+    fix version conflicts
+
+commit ac102f82ff5f5f9116447751e8c465ee0a5e708c
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 17:59:32 2017 -0700
+
+    set /home/ops/.jenkins to volume as well
+
+commit fa1d1afa62fa1be77b83b38ca5ccdf861c1e92f9
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 16:39:14 2017 -0700
+
+    set JENKINS_HOME env
+
+commit 9741c725086bc1b2c08b59625b470a1be8fb99fb
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 15:12:45 2017 -0700
+
+    update doc
+
+commit ed65618bc147ff0a9583f32ce8d55eb8121bf356
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 15:00:09 2017 -0700
+
+    update doc
+
+commit b084d86378810f47864e02edbba261aa026eda43
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 14:20:13 2017 -0700
+
+    add script to clean out containers, volumes, and networks
+
+commit 2c5da23daa5e747d5fdd3776f11ea863be8de434
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 14:17:44 2017 -0700
+
+    ignore celeryconfig.py and datasets.json linked via docker
+
+commit 78f18ee4cfb61ff542115e87412eeda6e014b7ff
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 21:04:03 2017 +0000
+
+    install container-builder
+
+commit b42da0b79aff5962b1c19eb7cfac284108f7a28e
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 13:59:59 2017 -0700
+
+    update doc for CI; cleanup
+
+commit c27000b83fa093c2d165c212716bb26d5187bbae
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 20:55:36 2017 +0000
+
+    set /home/ops/jenkins as a volume
+
+commit e5e6d5cd436aa6c77606cdb24030437cfa457513
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 20:49:12 2017 +0000
+
+    initial implementation of ci docker container
+
+commit 9f32278853eae7dc0dee842a877b3e90421cae23
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 12:14:34 2017 -0700
+
+    set depedendencies
+
+commit fc514d2af9a6ecebc5f96a8a586c38b69051ddcf
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 18:53:54 2017 +0000
+
+    initial implementation of verdi component
+
+commit 852cceca443fa6846ad75e172ba82d5f2ef4e91d
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 18:22:08 2017 +0000
+
+    update doc for GRQ component
+
+commit 1e75b0fdd7d7b07d2345b8724518115e5cfc19fd
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 11:04:26 2017 -0700
+
+    update port mapping to localhost
+
+commit cbf1e486ed23a8417f6059bdab438ce809d0c4b4
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 09:15:29 2017 -0700
+
+    ignore dirs
+
+commit a4b961fc7378e60c48d22f545b2f4de41f6955c7
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 09:12:20 2017 -0700
+
+    add configs for grq
+
+commit 6000ddd3eea58421ae0d03fd372d02bc91d4e426
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 09:01:59 2017 -0700
+
+    save .gitignore
+
+commit 7ce1a96d45426e70684a6f3a4bbd844724a5ff79
+Author: Gerald Manipon <geraldjohn.m.manipon@jpl.nasa.gov>
+Date:   Thu Mar 16 09:01:42 2017 -0700
+
+    update for localhost development
+
+commit f4e7949d2177ce0fe7f0c774a6929f7bbd8d16cc
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 09:08:48 2017 +0000
+
+    add dockerized GRQ component
+
+commit 06cf4988645b44d990cc34344d80bf586db62970
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 06:45:16 2017 +0000
+
+    link docker.sock into hysds component containers for dind
+
+commit 5dfad16aec05fd78cb633cf5b4c7ad0568944943
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 06:42:26 2017 +0000
+
+    initial implementation of docker compose for cluster
+
+commit e50c607c3207d380539f775bac1d7c10410e9cc1
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 06:01:08 2017 +0000
+
+    initial implementation of metrics docker container
+
+commit 6396c252445826537a586a25b234490b57830c99
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 03:42:32 2017 +0000
+
+    update doc
+
+commit a50d030db2ad080e090386fc377c9940a6b17489
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 03:24:32 2017 +0000
+
+    ensure figaro database is created
+
+commit f36c96c9cda37dd5690437e123e35382bfac37d1
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Mar 16 03:04:33 2017 +0000
+
+    update mozart docker container for v2
+
+commit 72362ab7bf52cd8140d4286e3231054a6c242df7
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Mar 15 16:06:08 2017 +0000
+
+    enable dind
+
+commit 0c9116507402843a8d3d89f72f501927cf8fedd9
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Mar 15 14:54:04 2017 +0000
+
+    install latest version of docker
+
+commit 83b58ce4335a7f3f8566db12f7a71aa81173203f
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Mar 14 18:08:16 2017 +0000
+
+    set v2 docker image as default
+
+commit 6a797f0153232dfc30afd6a1d2f341e96d953796
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Mar 14 17:48:13 2017 +0000
+
+    set v2 docker image as default
+
+commit 54025b871059acf7e9f5e95e6ce955b21ca06a3a
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Feb 16 21:41:11 2017 +0000
+
+    revert back to celery v3.1.25
+
+commit ea381a5508f33904e3bb5e32aec28e90aa68761b
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Feb 6 18:05:26 2017 +0000
+
+    bypass errors in chown of /home/ops which may fail because of read-only host volumes mounted
+
+commit d1ccb72189f34d27d5db3397d3a759f56f01219a
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri Feb 3 00:29:57 2017 +0000
+
+    update so that host user UID/GID to container user UID/GID is not required
+
+commit 2fe601885570fa8958af41746c241aeff0d4aebf
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jan 26 23:23:46 2017 +0000
+
+    update
+
+commit f2e5f0fab37893cabcd5105400a88e0e05d85db7
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jan 24 16:33:27 2017 +0000
+
+    initial dockerfile for base ISCE/GIAnT image
+
+commit 0868eb9fa01a3ed3da98b08be805b0552d91425b
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jan 23 23:14:53 2017 +0000
+
+    update path to install_hysds-v2.sh
+
+commit 99aeb93170cd52e33a1b0042b50dc27d93d7eb54
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jan 23 20:52:14 2017 +0000
+
+    install pigz and pbzip2
+
+commit 6804942e2c08d529f54ca6a92521bf067fd841f1
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jan 23 20:23:29 2017 +0000
+
+    remove explicit linking of celeryconfig.py and datasets.json
+
+commit 29b61915697835c423277e70ef2ad6459080fc2d
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jan 23 20:19:59 2017 +0000
+
+    remove soft-linking of celeryconfig.py; using celeryconfig.py in job dir
+
+commit 85e87b7a462d3c7f5342cf2673751624a1487821
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jan 18 21:39:16 2017 +0000
+
+    install hysds_commons
+
+commit 8172a411acf7fc7137cdeb50f5cb643292ff4014
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jan 11 03:45:46 2017 +0000
+
+    add dockerfile for HySDS v2 ARIA PGE container
+
+commit 45e747273699dad499d0d8ab47c4278fb23cb3d3
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jan 11 03:17:08 2017 +0000
+
+    run install_hysds.sh as ops user
+
+commit fce4b8de7b3293d8bb5b28f32799fa7975c2192b
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jan 11 03:12:46 2017 +0000
+
+    install latest hysds packages using install_hysds.sh script
+    
+    Handle errors with version conflict errors.
+
+commit 905feb4f1b4921e09beae998f3d9b532fddabab1
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jan 10 23:01:16 2017 +0000
+
+    re-add for v2
+
+commit ad9006d8e1765a306f5816aba7834a791b2607b3
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jan 10 22:59:24 2017 +0000
+
+    remove
+
+commit 01fbdb41eef8d8280605a8d24162137ea91e4988
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jan 10 21:18:29 2017 +0000
+
+    add dockerfile for v2 base HySDS PGE image
+
+commit 6ceb7e5ca893ed1f26ad13b190d285b4de1bf4cc
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Nov 14 22:37:32 2016 +0000
+
+    added
+
+commit 7e805f0fb3acb85f4888766ad1287b2b234ff948
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Sep 28 19:03:05 2016 +0000
+
+    clean out .svn dirs from giant & pyaps checkouts
+
+commit 9b9520a82e60326c35b8dc85501c5d9d6abe08ee
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Sep 14 22:59:43 2016 +0000
+
+    update GIAnT
+
+commit 4a12337e0889bb6c2954cf4ca838bc79016f2210
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Aug 10 02:11:30 2016 +0000
+
+    write .git_oauth_token file to allow clone from JPL github
+
+commit ca09e9036215e6af9937ebdc6dd96e02f18623f6
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Aug 10 01:48:18 2016 +0000
+
+    remove .git_oauth_token; update to latest rabbitmq (v3.6.5)
+
+commit 732e61ae25573224a51fe668fa4c43bfe769a195
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 27 07:41:16 2016 +0000
+
+    copy .netrc
+
+commit eb92aad8363b596ccab16381c21f553f1ddeaa6f
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jul 25 19:08:30 2016 +0000
+
+    factor out customizable dir paths to env vars
+
+commit 002a50d5051202b21b4ce57be7c5b78dfc8845f9
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jul 25 18:14:12 2016 +0000
+
+    create docker-compose file mozart service orchestration
+    
+    Updated docker entrypoint to wait for redis, rabbitmq, and ES services to come up.
+
+commit 751ebd4e638aa313010ebd343942e7978186de37
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 21:36:07 2016 +0000
+
+    create mozart user rules index
+
+commit 0d20b8b630e20179b4fbe8ee2bc74eecc077801e
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 18:43:54 2016 +0000
+
+    update pge-base
+
+commit d3a4db792c938df27d5b4172d90e583abdfa2cd0
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 17:21:28 2016 +0000
+
+    update doc
+
+commit b40d94f25b5429d046fee7fc9849f473dae6e61b
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 17:16:29 2016 +0000
+
+    ignore .gitignore
+
+commit ba475c2bf0d7d5782ba0554625b7bd6f056f3dd3
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 17:03:39 2016 +0000
+
+    fix .dockerignore to ignore all .git and .svn dirs
+    
+    Add removal of .git directories after automated install scripts run.
+
+commit 0cebd4df13eb7210408bb2d42ddd52422528ad89
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 16:34:18 2016 +0000
+
+    remove .git to keep image small
+
+commit 0cde978efd0e1f1e15dadb4076c78d08ed284854
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 15:47:39 2016 +0000
+
+    update mozart entrypoint to run db_create if settings.cfg exists
+
+commit 57baf6b190fcc3a74ba25192e89c33f6bb925806
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu Jul 21 15:09:49 2016 +0000
+
+    improve mozart dockerfile for dev iteration
+    
+    Add doc for running mozart container.
+
+commit e7997afced20f2ee354d98eec934b0b08ed91138
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 20 15:04:35 2016 +0000
+
+    rename dockerfile for ARIA PGE
+
+commit d7ac9ad402a2f4a24d0beab797e8703caddaa420
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 20 14:56:57 2016 +0000
+
+    update verdi image to run supervisord
+
+commit f110ef1c08a7cd96561d2268cc43b8e63bb6c3d8
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 20 14:50:22 2016 +0000
+
+    add dockerfiles for PGE container images
+    
+    Add Dockerfile for minimal PGE.
+    Add Dockerfile for minimal PGE with HySDS verdi component integrated.
+    Add docker entrypoint script for PGE images.
+
+commit 6e71dfbec47eef362e91c8fa38ba246c68aab003
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 20 14:07:47 2016 +0000
+
+    update verdi images to conform to standard docker entrypoint convention
+
+commit 30fcb7e18e2ec25cde414bab911efd9dcb17321c
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jul 20 14:01:26 2016 +0000
+
+    fix bug in redis entrypoint script
+    
+    Fix path of mozart entrypoint.
+    Add doc for mozart image.
+
+commit ce3ed1b85f914be0904ec34f4158c4391182ee79
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jul 19 22:04:39 2016 +0000
+
+    add dockerfile for redis
+
+commit a503a6b5983948fc7fa53fc84035fed947dead7d
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jul 19 18:57:18 2016 +0000
+
+    remove ssh port; set supervisord to run in foreground by default
+
+commit 6af045de3780e0136cc59b224c41d809116a1762
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jul 19 16:45:45 2016 +0000
+
+    add dockerfile for systemd-enabled centos7 image
+
+commit ff400ade9da02b9945d0d044da56120f8a7a7cbe
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue Jul 19 14:14:03 2016 +0000
+
+    initial implementation of mozart docker image
+
+commit f8117a140573a29c41548d37a1858b926496ef55
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jul 18 19:54:19 2016 +0000
+
+    add dockerfile for elasticsearch
+
+commit 5ed8663607864ab438deeedfefb8efd0507f657f
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon Jul 18 18:08:21 2016 +0000
+
+    add dockerfile and configs for rabbitmq
+
+commit 7fdd1572354995a363bef6b4567cc152d3265f74
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri Jul 15 19:38:48 2016 +0000
+
+    update to echo run commands and propagate errors
+
+commit bd1b49441ca9b9789328bbbaf0e5ab54cd3dc607
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri Jul 15 16:30:38 2016 +0000
+
+    add example of minimal PGE container
+
+commit 3794a4e0d0d9fe30a7484205e95aac6b69921b02
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed Jun 15 21:20:15 2016 +0000
+
+    remove asf-query
+
+commit 73f21d6b2a579cc6fe3cd6c46c020e352dc45f4d
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri Jun 3 20:12:33 2016 +0000
+
+    remove *.egg-info before running pip install
+
+commit 29f3124317b62a0b5d9623bad9fff1d22d377074
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 20 05:11:25 2016 +0000
+
+    for rebuilding, copy latest ISCE rpm and install
+
+commit f76e5771432616aba3d04f38f3fa3028779da811
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Thu May 19 20:56:11 2016 +0000
+
+    add documentation for exporting container image
+
+commit 5ee184ee62e2783a0d24b39088fcdeb4634b67c7
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Wed May 11 14:17:11 2016 +0000
+
+    update doc
+
+commit 129a2544661df428caafd1e183c5900c04f2fcc7
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue May 10 21:50:47 2016 +0000
+
+    update
+
+commit eb708b87ba23ba18b7ecee895a5ce53ae95ce84f
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Tue May 10 13:46:33 2016 +0000
+
+    copy AWS config/creds
+
+commit 52eba6b25865d5a5b7723a990395abe93c1b47fd
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon May 9 19:45:41 2016 +0000
+
+    fix permissions
+
+commit b4f2c70ec7cfd1afc66122d02ca3203a562f72cb
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon May 9 18:10:38 2016 +0000
+
+    update
+
+commit 8e891e93909838d48abb51c9364ab657b5d01711
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Mon May 9 16:37:26 2016 +0000
+
+    provision and configure ARIA-related code
+
+commit 6f1e596cf6f1a5ec070235e0b2671ba7d77be079
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 23:10:57 2016 +0000
+
+    add initial dockerfile for ARIA verdi
+
+commit cf121140c00c0f0aa8a52e847fbfa7234f65ced9
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 22:18:10 2016 +0000
+
+    create ops user using same UID and GID as host's ops
+    
+    Update README.md.
+
+commit be21574d002e5ca354f4dc88ce68ce1a0b9a0713
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 21:17:29 2016 +0000
+
+    use entrypoint since this container will run as an executable
+
+commit 6a0cf10e29e7a8616229ae0d1c62ba26adfb756b
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 21:05:32 2016 +0000
+
+    set workdir to ops home; start bash shell with --login
+
+commit d98211e0f8eefa1fe22c27f5f150768b8700e18d
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 20:51:52 2016 +0000
+
+    use absolute path
+
+commit e201e4725878f840c87bccd6561c136f09a72310
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 20:10:44 2016 +0000
+
+    stuff provisioning commands in a single run to keep image size small
+
+commit 6877e385c7c4177c3e71f55087fdcb790520a398
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 19:48:44 2016 +0000
+
+    add instruction for installing docker
+
+commit 171e4bd7d32790e6f88d8205ef8fbbee85752efc
+Author: gmanipon <gmanipon@jpl.nasa.gov>
+Date:   Fri May 6 19:47:28 2016 +0000
+
+    initial import

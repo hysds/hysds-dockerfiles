@@ -1,0 +1,58 @@
+FROM hysds/centos:7
+
+MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+LABEL description="Base continous integration Centos7 image for HySDS"
+
+ENV GIT_URL https://github.jpl.nasa.gov/raw/hysds-org/puppet-cont_int/docker/install.sh
+
+ARG git_oauth_token
+ARG id
+ARG gid
+
+# create ops user/group syncing uid and gid with host
+RUN set -ex \
+ && groupadd -r ops -g ${gid} \
+ && useradd -u ${id} -r -g ops -d /home/ops -s /bin/bash -m ops \
+ && usermod -aG docker ops
+
+# provision via puppet and install HySDS virtualenv
+RUN set -ex \
+ && echo "GIT_OAUTH_TOKEN=${git_oauth_token}" > /root/.git_oauth_token \
+ && source /root/.git_oauth_token \
+ && curl -skL -H "Authorization: token ${git_oauth_token}" ${GIT_URL} > /tmp/install.sh \
+ && chmod 755 /tmp/install.sh \
+ && /tmp/install.sh \
+ && rm -rf /etc/puppet/modules/* /mnt/swapfile \
+ && yum clean all \
+ && rm -f /tmp/install.sh \
+ && su ops -c "/home/ops/install_hysds.sh" \
+ && rm -rf /home/ops/verdi/ops/*/.git* \
+ && rm -rf /root/.git_oauth_token /home/ops/.git_oauth_token
+
+# update HySDS packages
+COPY repos/hysds_commons /home/ops/verdi/ops/hysds_commons/
+COPY repos/hysds /home/ops/verdi/ops/hysds/
+COPY repos/osaka /home/ops/verdi/ops/osaka/
+COPY repos/prov_es /home/ops/verdi/ops/prov_es/
+COPY repos/sciflo /home/ops/verdi/ops/sciflo/
+COPY repos/container-builder /home/ops/verdi/ops/container-builder/
+RUN set -ex \
+ && chown -R ops:ops /home/ops/verdi/ops
+
+# set default user and workdir
+USER ops
+WORKDIR /home/ops
+
+# rebuild update HySDS packages and link configuration files
+RUN set -ex \
+ && /home/ops/install_hysds.sh
+
+# rebuild update HySDS packages and link configuration files
+RUN set -ex \
+ && ln -sf /home/ops/verdi/etc/celeryconfig.py /home/ops/verdi/ops/hysds/celeryconfig.py
+
+# set entrypoint
+COPY hysds-dockerfiles/configs/verdi-docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE 80 443 8080 9001
+CMD ["supervisord"]

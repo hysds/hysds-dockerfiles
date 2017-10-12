@@ -1,0 +1,22 @@
+version: '2'
+services:
+  ci:
+    hostname: ci
+    container_name: ci
+    image: hysds/ci
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      - "9001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/ci/etc:/home/ops/verdi/etc"
+      - "${HYSDS_HOME}/ci/log:/home/ops/verdi/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+      - "/home/ops/jenkins"
+      - "/home/ops/.jenkins"

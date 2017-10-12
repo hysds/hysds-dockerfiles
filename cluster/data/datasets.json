@@ -1,0 +1,169 @@
+{
+  "datasets": [
+    { 
+      "ipath": "ariamh::data/area_of_interest",
+      "match_pattern": "/(?P<id>AOI_.+)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l0",
+      "type": "area_of_interest",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/area_of_interest/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/area_of_interest/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/area_of_interest/${version}/${id}"
+        ]
+      },
+      "browse": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/area_of_interest/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/area_of_interest/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/area_of_interest/${version}/${id}"
+        ]
+      }
+    },
+    {
+      "ipath": "ariamh::data/incoming",
+      "version": "v0.1",
+      "level": "l1",
+      "type": "incoming",
+      "match_pattern": "/incoming-(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<id>.*)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/incoming/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/incoming/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/incoming/${version}/${id}"
+        ]
+      },
+      "browse": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/incoming/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/incoming/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/incoming/${version}/${id}"
+        ]
+      }
+    },
+    {
+      "ipath": "hysds::data/dumby-product",
+      "match_pattern": "/(?P<id>dumby-product-\\d+)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l0",
+      "type": "dumby-data",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/dumby/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/dumby/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/dumby/${version}/${id}"
+        ]
+      },
+      "browse": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/dumby/${version}/${id}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/dumby/${version}/${id}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/dumby/${version}/${id}"
+        ]
+      }
+    },
+    { 
+      "ipath": "ariamh::data/S1-IW_SLC",
+      "match_pattern": "/(?P<spacecraft>S1\\w)_IW_SLC__(?P<misc>.*?)_(?P<year>\\d{4})(?P<month>\\d{2})(?P<day>\\d{2})(?P<timestamp>.+)$",
+      "alt_match_pattern": null,
+      "extractor": "/home/ops/ariamh/frameMetadata/sentinel/split_swath_products.sh",
+      "level": "l1",
+      "type": "slc",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}"
+        ]
+      },
+      "browse": {
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${spacecraft}_IW_SLC__${misc}_${year}${month}${day}${timestamp}"
+        ]
+      }
+    },
+    { 
+      "ipath": "ariamh::data/S1-IW_SLC_SWATH",
+      "match_pattern": "/(?P<spacecraft>s1\\w)-iw(?P<swath>\\d)-slc-(?P<misc>.*?)-(?P<year>\\d{4})(?P<month>\\d{2})(?P<day>\\d{2})(?P<rest>.+)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l1",
+      "type": "slc",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}"
+        ]
+      },
+      "browse": {
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/${type}/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${spacecraft}_slc/${version}/${year}/${month}/${day}/${spacecraft}-iw${swath}-slc-${misc}-${year}${month}${day}${rest}"
+        ]
+      }
+    },
+    { 
+      "ipath": "ariamh::data/S1-IFG",
+      "match_pattern": "/(?P<pre>S1-IFG_.*?_TN.*?_.*?-)(?P<year>\\d{4})(?P<month>\\d{2})(?P<day>\\d{2})(?P<rest>.+)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l2",
+      "type": "interferogram",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}"
+        ]
+      },
+      "browse": {
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}"
+        ]
+      }
+    },
+    { 
+      "ipath": "ariamh::data/S1-COH",
+      "match_pattern": "/(?P<pre>S1-COH_.*?_TN.*?_.*?-)(?P<year>\\d{4})(?P<month>\\d{2})(?P<day>\\d{2})(?P<rest>.+)$",
+      "alt_match_pattern": null,
+      "extractor": null,
+      "level": "l2",
+      "type": "coherence",
+      "publish": {
+        "s3-profile-name": "default",
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/products/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}"
+        ]
+      },
+      "browse": {
+        "location": "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+        "urls": [
+          "http://hysds-v2-dev-product-bucket.s3-website-us-west-2.amazonaws.com/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}",
+          "s3://s3-us-west-2.amazonaws.com:80/hysds-v2-dev-product-bucket/browse/${type}/${version}/${year}/${month}/${day}/${pre}${year}${month}${day}${rest}"
+        ]
+      }
+    }
+  ]
+}

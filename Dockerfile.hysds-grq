@@ -1,0 +1,69 @@
+FROM hysds/centos:7
+
+MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+LABEL description="Base grq Centos7 image for HySDS"
+
+ENV GIT_URL https://github.jpl.nasa.gov/raw/hysds-org/puppet-grq/docker/install.sh
+
+ARG git_oauth_token
+ARG id
+ARG gid
+
+# create ops user/group syncing uid and gid with host
+RUN set -ex \
+ && groupadd -r ops -g ${gid} \
+ && useradd -u ${id} -r -g ops -d /home/ops -s /bin/bash -m ops \
+ && usermod -aG docker ops
+
+# provision via puppet and install HySDS virtualenv
+RUN set -ex \
+ && echo "GIT_OAUTH_TOKEN=${git_oauth_token}" > /root/.git_oauth_token \
+ && source /root/.git_oauth_token \
+ && curl -skL -H "Authorization: token ${git_oauth_token}" ${GIT_URL} > /tmp/install.sh \
+ && chmod 755 /tmp/install.sh \
+ && /tmp/install.sh \
+ && rm -rf /etc/puppet/modules/* /mnt/swapfile \
+ && yum clean all \
+ && rm -f /tmp/install.sh \
+ && su ops -c "/home/ops/install_hysds.sh" \
+ && rm -rf /home/ops/sciflo/ops/*/.git* \
+ && rm -rf /root/.git_oauth_token /home/ops/.git_oauth_token
+
+# update HySDS packages
+COPY repos/hysds_commons /home/ops/sciflo/ops/hysds_commons/
+COPY repos/hysds /home/ops/sciflo/ops/hysds/
+COPY repos/osaka /home/ops/sciflo/ops/osaka/
+COPY repos/prov_es /home/ops/sciflo/ops/prov_es/
+COPY repos/sciflo /home/ops/sciflo/ops/sciflo/
+COPY repos/eosUtils /home/ops/sciflo/ops/eosUtils/
+COPY repos/soap /home/ops/sciflo/ops/soap/
+COPY repos/crawler /home/ops/sciflo/ops/crawler/
+COPY repos/grq2 /home/ops/sciflo/ops/grq2/
+COPY repos/tosca /home/ops/sciflo/ops/tosca/
+RUN set -ex \
+ && chown -R ops:ops /home/ops/sciflo/ops
+
+# set default user and workdir
+USER ops
+WORKDIR /home/ops
+
+# rebuild update HySDS packages and link configuration files
+RUN set -ex \
+ && /home/ops/install_hysds.sh
+
+# rebuild update HySDS packages and link configuration files
+RUN set -ex \
+ && ln -sf /home/ops/sciflo/etc/celeryconfig.py /home/ops/sciflo/ops/hysds/celeryconfig.py \
+ && ln -sf /home/ops/sciflo/etc/grq2_settings.cfg /home/ops/sciflo/ops/grq2/settings.cfg \
+ && ln -sf /home/ops/sciflo/etc/tosca_settings.cfg /home/ops/sciflo/ops/tosca/settings.cfg \
+ && ln -sf /home/ops/sciflo/etc/server.key /home/ops/sciflo/ops/grq2/server.key \
+ && ln -sf /home/ops/sciflo/etc/server.pem /home/ops/sciflo/ops/grq2/server.pem \
+ && ln -sf /home/ops/sciflo/etc/server.key /home/ops/sciflo/ops/tosca/server.key \
+ && ln -sf /home/ops/sciflo/etc/server.pem /home/ops/sciflo/ops/tosca/server.pem
+
+# set entrypoint
+COPY hysds-dockerfiles/configs/wait-for-it.sh /wait-for-it.sh
+COPY hysds-dockerfiles/configs/grq-docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE 80 443 8878 8879 9001
+CMD ["supervisord"]

@@ -1,0 +1,230 @@
+version: '2'
+services:
+  mozart:
+    hostname: mozart
+    container_name: mozart
+    image: hysds/mozart
+    ports:
+      - "10080:80"
+      - "10443:443"
+      - "15555:5555"
+      - "18888:8888"
+      - "18898:8898"
+      - "19001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/mozart/etc:/home/ops/mozart/etc"
+      - "${HYSDS_HOME}/datasets.json:/home/ops/mozart/etc/datasets.json"
+      - "${HYSDS_HOME}/celeryconfig.py:/home/ops/mozart/etc/celeryconfig.py"
+      - "${HYSDS_HOME}/mozart/log:/home/ops/mozart/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    volumes_from:
+      - mozart-redis
+    links:
+      - mozart-rabbit
+      - mozart-redis
+      - mozart-elasticsearch
+    depends_on:
+      - mozart-rabbit
+      - mozart-redis
+      - mozart-elasticsearch
+  mozart-rabbit:
+    image: hysds/rabbitmq
+    hostname: mozart-rabbit
+    container_name: mozart-rabbit
+    ports:
+      - "15672:5672"
+      - "25672:15672"
+    volumes:
+      - "${HYSDS_HOME}/mozart/rabbitmq:/var/lib/rabbitmq"
+  mozart-redis:
+    image: hysds/redis
+    hostname: mozart-redis
+    container_name: mozart-redis
+    ports:
+      - "16379:6379"
+    volumes:
+      - "${HYSDS_HOME}/mozart/redis:/data/redis"
+  mozart-elasticsearch:
+    image: hysds/elasticsearch
+    hostname: mozart-elasticsearch
+    container_name: mozart-elasticsearch
+    ports:
+      - "19200:9200"
+      - "19300:9300"
+    volumes:
+      - "${HYSDS_HOME}/mozart/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/mozart/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='mozart-elasticsearch'",
+               "-Des.cluster.name='resource_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0" ]
+  metrics:
+    hostname: metrics
+    container_name: metrics
+    image: hysds/metrics
+    ports:
+      - "20080:80"
+      - "20443:443"
+      - "29001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/metrics/etc:/home/ops/mozart/etc"
+      - "${HYSDS_HOME}/datasets.json:/home/ops/mozart/etc/datasets.json"
+      - "${HYSDS_HOME}/celeryconfig.py:/home/ops/mozart/etc/celeryconfig.py"
+      - "${HYSDS_HOME}/metrics/etc/config.js:/var/www/html/kibana-3.1.2/config.js"
+      - "${HYSDS_HOME}/metrics/log:/home/ops/mozart/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    volumes_from:
+      - metrics-redis
+    links:
+      - metrics-redis
+      - metrics-elasticsearch
+    depends_on:
+      - metrics-redis
+      - metrics-elasticsearch
+  metrics-redis:
+    image: hysds/redis
+    hostname: metrics-redis
+    container_name: metrics-redis
+    ports:
+      - "26379:6379"
+    volumes:
+      - "${HYSDS_HOME}/metrics/redis:/data/redis"
+  metrics-elasticsearch:
+    image: hysds/elasticsearch
+    hostname: metrics-elasticsearch
+    container_name: metrics-elasticsearch
+    ports:
+      - "29200:9200"
+      - "29300:9300"
+    volumes:
+      - "${HYSDS_HOME}/metrics/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/metrics/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='metrics-elasticsearch'",
+               "-Des.cluster.name='metrics_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0", 
+               "-Des.index.number_of_shards=16",
+               "-Des.http.cors.enabled=true",
+               "-Des.http.cors.allow-origin=http://localhost:20080" ]
+  grq:
+    hostname: grq
+    container_name: grq
+    image: hysds/grq
+    ports:
+      - "30080:80"
+      - "30443:443"
+      - "38878:8878"
+      - "38879:8879"
+      - "39001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/grq/etc:/home/ops/sciflo/etc"
+      - "${HYSDS_HOME}/datasets.json:/home/ops/sciflo/etc/datasets.json"
+      - "${HYSDS_HOME}/celeryconfig.py:/home/ops/sciflo/etc/celeryconfig.py"
+      - "${HYSDS_HOME}/grq/log:/home/ops/sciflo/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    links:
+      - grq-redis
+      - grq-elasticsearch
+    depends_on:
+      - grq-redis
+      - grq-elasticsearch
+  grq-redis:
+    image: hysds/redis
+    hostname: grq-redis
+    container_name: grq-redis
+    ports:
+      - "36379:6379"
+    volumes:
+      - "${HYSDS_HOME}/grq/redis:/data/redis"
+  grq-elasticsearch:
+    image: hysds/elasticsearch
+    hostname: grq-elasticsearch
+    container_name: grq-elasticsearch
+    ports:
+      - "39200:9200"
+      - "39300:9300"
+    volumes:
+      - "${HYSDS_HOME}/grq/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/grq/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='grq-elasticsearch'",
+               "-Des.cluster.name='products_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0", 
+               "-Des.index.number_of_shards=16",
+               "-Des.script.engine.groovy.inline.aggs=on" ]
+  verdi:
+    hostname: verdi
+    container_name: verdi
+    image: hysds/verdi
+    ports:
+      - "40080:80"
+      - "40443:443"
+      - "48085:8085"
+      - "49001:9001"
+      - "46224:46224"
+      - "46224:46224/udp"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc"
+      - "${HYSDS_HOME}/datasets.json:/home/ops/verdi/etc/datasets.json"
+      - "${HYSDS_HOME}/celeryconfig.py:/home/ops/verdi/etc/celeryconfig.py"
+      - "${HYSDS_HOME}/verdi/log:/home/ops/verdi/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    depends_on:
+      - mozart
+      - metrics
+      - grq
+  ci:
+    hostname: ci
+    container_name: ci
+    image: hysds/ci
+    ports:
+      - "50080:80"
+      - "50443:443"
+      - "48081:8080"
+      - "49002:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/ci/etc:/home/ops/verdi/etc"
+      - "${HYSDS_HOME}/ci/log:/home/ops/verdi/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+      - "/home/ops/jenkins"
+      - "/home/ops/.jenkins"
+    depends_on:
+      - mozart
+      - grq

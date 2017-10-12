@@ -1,0 +1,51 @@
+version: '2'
+services:
+  metrics:
+    hostname: metrics
+    container_name: metrics
+    image: hysds/metrics
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/metrics/etc:/home/ops/mozart/etc"
+      - "${HYSDS_HOME}/metrics/log:/home/ops/mozart/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    links:
+      - redis
+      - elasticsearch
+  redis:
+    image: hysds/redis
+    hostname: metrics-redis
+    container_name: metrics-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "${HYSDS_HOME}/metrics/redis:/data/redis"
+  elasticsearch:
+    image: hysds/elasticsearch
+    hostname: metrics-elasticsearch
+    container_name: metrics-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "${HYSDS_HOME}/metrics/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/metrics/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='metrics-elasticsearch'",
+               "-Des.cluster.name='metrics_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0", 
+               "-Des.index.number_of_shards=16",
+               "-Des.http.cors.enabled=true",
+               "-Des.http.cors.allow-origin=http://${METRICS_FQDN}" ]

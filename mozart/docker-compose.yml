@@ -1,0 +1,63 @@
+version: '3'
+services:
+  mozart:
+    hostname: mozart
+    container_name: mozart
+    image: hysds/mozart
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5555:5555"
+      - "8888:8888"
+      - "8898:8898"
+      - "9001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/mozart/etc:/home/ops/mozart/etc"
+      - "${HYSDS_HOME}/mozart/log:/home/ops/mozart/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    volumes_from:
+      - redis
+    links:
+      - rabbit
+      - redis
+      - elasticsearch
+  rabbit:
+    image: hysds/rabbitmq
+    hostname: mozart-rabbit
+    container_name: mozart-rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "${HYSDS_HOME}/mozart/rabbitmq:/var/lib/rabbitmq"
+  redis:
+    image: hysds/redis
+    hostname: mozart-redis
+    container_name: mozart-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "${HYSDS_HOME}/mozart/redis:/data/redis"
+  elasticsearch:
+    image: hysds/elasticsearch
+    hostname: mozart-elasticsearch
+    container_name: mozart-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "${HYSDS_HOME}/mozart/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/mozart/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='mozart-elasticsearch'",
+               "-Des.cluster.name='resource_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0" ]

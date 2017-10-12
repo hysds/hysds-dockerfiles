@@ -1,0 +1,8 @@
+FROM docker.io/rabbitmq:3-management
+
+MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+LABEL description="RabbitMQ image for HySDS"
+
+# update configs
+COPY hysds-dockerfiles/configs/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+COPY hysds-dockerfiles/configs/rabbitmq-server /etc/default/rabbitmq-server

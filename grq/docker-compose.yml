@@ -1,0 +1,52 @@
+version: '2'
+services:
+  grq:
+    hostname: grq
+    container_name: grq
+    image: hysds/grq
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8878:8878"
+      - "8879:8879"
+      - "9001:9001"
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "${HYSDS_HOME}/grq/etc:/home/ops/sciflo/etc"
+      - "${HYSDS_HOME}/grq/log:/home/ops/sciflo/log"
+      - "${HOME}/.aws:/home/ops/.aws"
+      - "${HOME}/.boto:/home/ops/.boto"
+      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
+      - "${HOME}/.netrc:/home/ops/.netrc"
+    links:
+      - redis
+      - elasticsearch
+  redis:
+    image: hysds/redis
+    hostname: grq-redis
+    container_name: grq-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "${HYSDS_HOME}/grq/redis:/data/redis"
+  elasticsearch:
+    image: hysds/elasticsearch
+    hostname: grq-elasticsearch
+    container_name: grq-elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "${HYSDS_HOME}/grq/elasticsearch/config:/usr/share/elasticsearch/config"
+      - "${HYSDS_HOME}/grq/elasticsearch/data:/usr/share/elasticsearch/data"
+    environment:
+      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
+      - MAX_LOCKED_MEMORY=unlimited
+    command: [ "elasticsearch",
+               "-Des.node.name='grq-elasticsearch'",
+               "-Des.cluster.name='products_cluster'",
+               "-Des.bootstrap.mlockall=true",
+               "-Des.network.host=0", 
+               "-Des.index.number_of_shards=16",
+               "-Des.script.engine.groovy.inline.aggs=on" ]

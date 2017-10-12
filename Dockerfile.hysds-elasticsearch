@@ -1,0 +1,9 @@
+FROM docker.io/elasticsearch:1.7
+
+MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+LABEL description="ElasticSearch image for HySDS"
+
+# install head and kopf plugins
+RUN set -ex \
+ && /usr/share/elasticsearch/bin/plugin --install lmenezes/elasticsearch-kopf/1.2 \
+ && /usr/share/elasticsearch/bin/plugin --install mobz/elasticsearch-head
