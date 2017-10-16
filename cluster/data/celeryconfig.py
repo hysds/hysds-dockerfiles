@@ -29,7 +29,7 @@ CELERY_IMPORTS = [
 
 CELERY_SEND_TASK_ERROR_EMAILS = False
 ADMINS = (
-    ('"Gerald Manipon"', 'gmanipon@jpl.nasa.gov'),
+    ('"Gerald Manipon"', 'pymonger@gmail.com'),
 )
 SERVER_EMAIL = 'ops@mozart-rabbit'
 

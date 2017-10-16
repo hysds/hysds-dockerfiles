@@ -1,9 +1,9 @@
 FROM hysds/centos:7
 
-MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+MAINTAINER pymonger "pymonger@gmail.com"
 LABEL description="Base mozart Centos7 image for HySDS"
 
-ENV GIT_URL https://github.jpl.nasa.gov/raw/hysds-org/puppet-mozart/docker/install.sh
+ENV GIT_URL https://github.com/hysds/puppet-mozart/raw/docker/install.sh
 
 ARG git_oauth_token
 ARG id

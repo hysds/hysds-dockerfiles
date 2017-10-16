@@ -1,9 +1,9 @@
 FROM hysds/centos:7
 
-MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+MAINTAINER pymonger "pymonger@gmail.com"
 LABEL description="Redis image for HySDS"
 
-ENV GIT_URL https://github.jpl.nasa.gov/raw/hysds-org/puppet-redis/master/install.sh
+ENV GIT_URL https://github.com/hysds/puppet-redis/raw/master/install.sh
 
 ARG git_oauth_token
 

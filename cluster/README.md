@@ -4,7 +4,7 @@
 
 Clone the grq puppet module and create the geonames data tarball for elasticsearch:
 ```
-git clone https://github.jpl.nasa.gov/hysds-org/grq
+git clone https://github.com/hysds/grq
 cd grq/files
 cat elasticsearch-data.tbz2.0* > /tmp/elasticsearch-data.tbz2
 ```

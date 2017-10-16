@@ -3,7 +3,7 @@
 Install Docker
 --------------
 
-Follow instructions at https://github.jpl.nasa.gov/hysds-org/puppet-docker
+Follow instructions at https://github.com/hysds/puppet-docker
 
 
 Set .dockerignore

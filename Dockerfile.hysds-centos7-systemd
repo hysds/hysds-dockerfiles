@@ -1,6 +1,6 @@
 FROM hysds/centos:7
 
-MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+MAINTAINER pymonger "pymonger@gmail.com"
 LABEL description="Base Centos7 image for HySDS with systemd enabled"
 
 ENV container docker

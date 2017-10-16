@@ -1,6 +1,6 @@
 FROM docker.io/centos:7
 
-MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+MAINTAINER pymonger "pymonger@gmail.com"
 LABEL description="Base Centos7 image for HySDS"
 
 ENV GOSU_VERSION=1.10
