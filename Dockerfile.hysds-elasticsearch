@@ -1,6 +1,6 @@
 FROM docker.io/elasticsearch:1.7
 
-MAINTAINER pymonger "pymonger@gmail.com"
+MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="ElasticSearch image for HySDS"
 
 # install head and kopf plugins

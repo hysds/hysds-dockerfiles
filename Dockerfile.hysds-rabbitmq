@@ -1,6 +1,6 @@
 FROM docker.io/rabbitmq:3-management
 
-MAINTAINER pymonger "pymonger@gmail.com"
+MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="RabbitMQ image for HySDS"
 
 # update configs

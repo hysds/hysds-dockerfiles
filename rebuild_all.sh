@@ -1,12 +1,11 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
-  echo "Enter release date and oauth token as args: $0 <yyyymmdd> <oauth token>"
-  echo "e.g.: $0 20170620 xxxxxxxxxxx"
+if [ "$#" -ne 1 ]; then
+  echo "Enter release date as arg: $0 <yyyymmdd>"
+  echo "e.g.: $0 20170620"
   exit 1
 fi
 REL_DATE=$1
-OAUTH_TOKEN=$2
 
 # get uid and gid
 ID=$(id -u)
@@ -46,7 +45,7 @@ docker push hysds/pge-minimal:latest || exit 1
 echo "#############################"
 echo "Building hysds/redis"
 echo "#############################"
-docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis --build-arg git_oauth_token=${OAUTH_TOKEN} /home/ops || exit 1
+docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis /home/ops || exit 1
 docker tag hysds/redis:${REL_DATE} hysds/redis:latest || exit 1
 docker push hysds/redis:${REL_DATE} || exit 1
 docker push hysds/redis:latest || exit 1
@@ -74,7 +73,7 @@ for i in pge-base verdi mozart metrics grq ci; do
   echo "#############################"
   echo "Building hysds/$i"
   echo "#############################"
-  docker build --rm --force-rm -t hysds/${i}:${REL_DATE} -f Dockerfile.hysds-${i} --build-arg id=$ID --build-arg gid=$GID --build-arg git_oauth_token=${OAUTH_TOKEN} /home/ops || exit 1
+  docker build --rm --force-rm -t hysds/${i}:${REL_DATE} -f Dockerfile.hysds-${i} --build-arg id=$ID --build-arg gid=$GID /home/ops || exit 1
   docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
   docker push hysds/${i}:${REL_DATE} || exit 1
   docker push hysds/${i}:latest || exit 1

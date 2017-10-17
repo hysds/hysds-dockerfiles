@@ -1,11 +1,10 @@
 FROM hysds/centos:7
 
-MAINTAINER pymonger "pymonger@gmail.com"
+MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="Base PGE (product generation executor) Centos7 image for HySDS"
 
 ENV GIT_URL https://github.com/hysds/puppet-verdi/raw/docker/install.sh
 
-ARG git_oauth_token
 ARG id
 ARG gid
 
@@ -17,17 +16,14 @@ RUN set -ex \
 
 # provision via puppet and install HySDS virtualenv
 RUN set -ex \
- && echo "GIT_OAUTH_TOKEN=${git_oauth_token}" > /root/.git_oauth_token \
- && source /root/.git_oauth_token \
- && curl -skL -H "Authorization: token ${git_oauth_token}" ${GIT_URL} > /tmp/install.sh \
+ && curl -skL ${GIT_URL} > /tmp/install.sh \
  && chmod 755 /tmp/install.sh \
  && /tmp/install.sh \
  && rm -rf /etc/puppet/modules/* /mnt/swapfile \
  && yum clean all \
  && rm -f /tmp/install.sh \
  && su ops -c "/home/ops/install_hysds.sh" \
- && rm -rf /home/ops/verdi/ops/* \
- && rm -rf /root/.git_oauth_token /home/ops/.git_oauth_token
+ && rm -rf /home/ops/verdi/ops/*
 
 # update HySDS packages
 COPY repos/hysds_commons /home/ops/verdi/ops/hysds_commons/

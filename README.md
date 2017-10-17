@@ -45,8 +45,7 @@ Minimal Image for HySDS PGE (contains HySDS verdi component)
 
 ```
 docker build --rm --force-rm -t hysds/pge-base:<YYYYMMDD> -f Dockerfile.hysds-pge-base \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$ID --build-arg gid=`id -g` /home/ops
 ```
 
 
@@ -55,14 +54,13 @@ ARIA PGE Image (based on Mimimal Image for HySDS PGE)
 
 Use cache:
 ```
-docker build --rm --force-rm -t hysds/pge-aria:<YYYYMMDD> -f Dockerfile.hysds-pge-aria \
-       --build-arg git_oauth_token=<token> /home/ops
+docker build --rm --force-rm -t hysds/pge-aria:<YYYYMMDD> -f Dockerfile.hysds-pge-aria /home/ops
 ```
 
 No cache:
 ```
 docker build --no-cache --rm --force-rm -t hysds/pge-aria:<YYYYMMDD> \
-       -f Dockerfile.hysds-pge-aria --build-arg git_oauth_token=<token> /home/ops
+       -f Dockerfile.hysds-pge-aria /home/ops
 ```
 
 Export Container
@@ -104,8 +102,7 @@ chmod 600 /home/ops/.netrc
 ```
 cd /home/ops/hysds-dockerfiles
 docker build --rm --force-rm -t hysds/mozart:<YYYYMMDD> -f Dockerfile.hysds-mozart \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$id --build-arg gid=`id -g` /home/ops
 docker tag hysds/mozart:<YYYYMMDD> hysds/mozart:latest
 ```
 
@@ -158,8 +155,7 @@ chmod 600 /home/ops/.netrc
 ```
 cd /home/ops/hysds-dockerfiles
 docker build --rm --force-rm -t hysds/metrics:<YYYYMMDD> -f Dockerfile.hysds-metrics \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$ID --build-arg gid=`id -g` /home/ops
 docker tag hysds/metrics:<YYYYMMDD> hysds/metrics:latest
 ```
 
@@ -206,8 +202,7 @@ cp -rp ~/aws_creds/.aws ~/aws_creds/.s3cfg ~/aws_creds/.boto /home/ops/
 ```
 cd /home/ops/hysds-dockerfiles
 docker build --rm --force-rm -t hysds/grq:<YYYYMMDD> -f Dockerfile.hysds-grq \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$ID --build-arg gid=`id -g` /home/ops
 docker tag hysds/grq:<YYYYMMDD> hysds/grq:latest
 ```
 
@@ -252,8 +247,7 @@ cp -rp ~/aws_creds/.aws ~/aws_creds/.s3cfg ~/aws_creds/.boto /home/ops/
 ```
 cd /home/ops/hysds-dockerfiles
 docker build --rm --force-rm -t hysds/verdi:<YYYYMMDD> -f Dockerfile.hysds-verdi \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$ID --build-arg gid=`id -g` /home/ops
 docker tag hysds/verdi:<YYYYMMDD> hysds/verdi:latest
 ```
 
@@ -297,8 +291,7 @@ cp -rp ~/aws_creds/.aws ~/aws_creds/.s3cfg ~/aws_creds/.boto /home/ops/
 ```
 cd /home/ops/hysds-dockerfiles
 docker build --rm --force-rm -t hysds/ci:<YYYYMMDD> -f Dockerfile.hysds-ci \
-       --build-arg git_oauth_token=<token> --build-arg id=$ID \
-       --build-arg gid=`id -g` /home/ops
+       --build-arg id=$ID --build-arg gid=`id -g` /home/ops
 docker tag hysds/ci:<YYYYMMDD> hysds/ci:latest
 ```
 
