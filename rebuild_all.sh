@@ -68,8 +68,8 @@ docker tag hysds/rabbitmq:3-management hysds/rabbitmq:latest || exit 1
 docker push hysds/rabbitmq:3-management || exit 1
 docker push hysds/rabbitmq:latest || exit 1
 
-# build hysds components
-for i in pge-base verdi mozart metrics grq ci; do
+# build worker hysds components
+for i in pge-base verdi; do
   echo "#############################"
   echo "Building hysds/$i"
   echo "#############################"
@@ -82,3 +82,15 @@ done
 # export verdi
 cd /data/docker_images/
 docker save hysds/verdi:${REL_DATE} > hysds-verdi-${REL_DATE}.tar; echo "done saving"; pigz -f hysds-verdi-${REL_DATE}.tar
+cd -
+
+# build hysds components
+for i in mozart metrics grq ci; do
+  echo "#############################"
+  echo "Building hysds/$i"
+  echo "#############################"
+  docker build --rm --force-rm -t hysds/${i}:${REL_DATE} -f Dockerfile.hysds-${i} --build-arg id=$ID --build-arg gid=$GID /home/ops || exit 1
+  docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
+  docker push hysds/${i}:${REL_DATE} || exit 1
+  docker push hysds/${i}:latest || exit 1
+done
