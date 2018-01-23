@@ -91,7 +91,7 @@ if [ ! -d "$OPS/$PACKAGE" ]; then
 fi
 cd $OPS/$PACKAGE
 pip install -U pyasn1
-#pip install pyasn1==0.3.4
+pip install -U pyasn1-modules
 pip install -U python-dateutil
 pip install -e .
 if [ "$?" -ne 0 ]; then
