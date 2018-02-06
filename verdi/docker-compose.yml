@@ -4,6 +4,7 @@ services:
     hostname: verdi
     container_name: verdi
     image: hysds/verdi
+    user: "${HOST_UID}:${HOST_GID}"
     ports:
       - "80:80"
       - "443:443"
