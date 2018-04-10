@@ -92,7 +92,7 @@ fi
 cd $OPS/$PACKAGE
 pip install -U pyasn1
 pip install -U pyasn1-modules
-pip install -U python-dateutil
+#pip install -U python-dateutil
 pip install -e .
 if [ "$?" -ne 0 ]; then
   echo "Failed to run 'pip install -e .' for $PACKAGE."
