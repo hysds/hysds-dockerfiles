@@ -82,6 +82,7 @@ done
 # export verdi
 cd /data/docker_images/
 docker save hysds/verdi:${REL_DATE} > hysds-verdi-${REL_DATE}.tar; echo "done saving"; pigz -f hysds-verdi-${REL_DATE}.tar
+docker save hysds/verdi:latest > hysds-verdi-latest.tar; echo "done saving"; pigz -f hysds-verdi-latest.tar
 cd -
 
 # build hysds components
