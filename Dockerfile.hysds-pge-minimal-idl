@@ -1,0 +1,26 @@
+FROM hysds/pge-minimal:latest
+
+MAINTAINER gmanipon "gmanipon@jpl.nasa.gov"
+LABEL description="Base Centos7 image with IDL v7.06"
+
+# copy IDL tarball, install dependencies, and install IDL
+USER root
+COPY idl706linux-hysds.x86.tar.gz /tmp/idl706linux-hysds.x86.tar.gz
+RUN set -ex \
+ && echo "ops ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-cloudimg-ops \
+ && chmod 400 /etc/sudoers.d/90-cloudimg-ops \
+ && yum update -y \
+ && yum install -y libXp libXinerama libXpm libXmu xorg-x11-server-Xvfb \
+ && mkdir /usr/local/itt \
+ && chmod a+rx /usr/local/itt \
+ && cd /usr/local/itt \
+ && tar xvf /tmp/idl706linux-hysds.x86.tar.gz \
+ && yes | ./install \
+ && rm -f /tmp/idl706linux-hysds.x86.tar.gz
+
+# set entrypoint
+USER ops
+WORKDIR /home/ops
+COPY configs/idl-docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/bin/bash", "--login"]
