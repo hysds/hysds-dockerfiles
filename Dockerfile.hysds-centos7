@@ -3,15 +3,21 @@ FROM docker.io/centos:7
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="Base Centos7 image for HySDS"
 
+# Set gosu version
 ENV GOSU_VERSION=1.10
+
+# Set user and group
+ENV USER=ops
+ENV GROUP=ops
 
 RUN set -ex \
  && yum install -y epel-release \
  && yum update -y \
  && yum install -y \
     puppet puppet-firewalld nscd chronyd wget curl \
-    subversion git vim screen firewalld \
+    subversion git vim screen firewalld yum-utils \
     openssh-server sudo cloud-init pbzip2 pigz \
+    bzip2 zip \
  && curl -fsSL https://get.docker.com/ | sed 's/systemctl/echo systemctl/' | sh \
  && yum clean all \
  && rm -rf /var/cache/yum \
@@ -22,4 +28,37 @@ RUN set -ex \
  && rm /usr/local/bin/gosu.asc \
  && rm -r /root/.gnupg/ \
  && chmod +x /usr/local/bin/gosu \
- && chmod u+s /usr/local/bin/gosu
+ && chmod u+s /usr/local/bin/gosu \
+ && groupadd -r $GROUP \
+ && useradd -r -g $GROUP -d /home/$USER -s /bin/bash -m $USER \
+ && usermod -aG docker $USER \
+ && chmod 755 /home/$USER \
+ && echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# set default user and workdir
+USER $USER
+WORKDIR /home/$USER
+
+# install conda
+RUN set -ex \
+ && curl -sSL https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -o miniconda.sh \
+ && bash miniconda.sh -b -p $HOME/anaconda2 \
+ && rm miniconda.sh \
+ && touch $HOME/anaconda2/conda-meta/pinned \
+ && export PATH=$HOME/anaconda2/bin:$PATH \
+ && conda config --set show_channel_urls True \
+ && conda config --add channels conda-forge \
+ && conda update --all --yes \
+ && conda install --yes virtualenv tini \
+ && export CONDA_TINI_INFO=( `conda list tini | grep tini` ) \
+ && echo "tini ${CONDA_TINI_INFO[1]}" >> $HOME/anaconda2/conda-meta/pinned \
+ && conda clean -a -y \
+ && rm -rf $HOME/anaconda2/pkgs \
+ && echo "" >> /home/$USER/.bash_profile \
+ && echo "# set path to anaconda" >> /home/$USER/.bash_profile \
+ && echo 'export PATH=$HOME/anaconda2/bin:$PATH' >> /home/$USER/.bash_profile
+
+
+# set entrypoint
+COPY configs/verdi-docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
