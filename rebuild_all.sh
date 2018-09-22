@@ -88,7 +88,7 @@ echo "#############################"
 echo "Building hysds/pge-base hysds/verdi"
 echo "#############################"
 cd $TMP_DIR
-git clone -b docker-lite --single-branch https://github.com/hysds/puppet-verdi.git verdi
+git clone -b docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${REL_DATE} || exit 1
 cd ..
