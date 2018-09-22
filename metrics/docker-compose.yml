@@ -1,9 +1,10 @@
-version: '2'
+version: '2.2'
 services:
   metrics:
     hostname: metrics
     container_name: metrics
     image: hysds/metrics
+    init: true
     ports:
       - "80:80"
       - "443:443"

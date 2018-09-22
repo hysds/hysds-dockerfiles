@@ -4,6 +4,7 @@ services:
     hostname: mozart
     container_name: mozart
     image: hysds/mozart
+    init: true
     ports:
       - "80:80"
       - "443:443"

@@ -1,9 +1,10 @@
-version: '2'
+version: '2.2'
 services:
   verdi:
     hostname: verdi
     container_name: verdi
     image: hysds/verdi
+    init: true
     user: "${HOST_UID}:${HOST_GID}"
     ports:
       - "80:80"

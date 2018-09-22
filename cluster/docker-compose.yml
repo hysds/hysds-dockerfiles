@@ -1,9 +1,10 @@
-version: '2'
+version: '2.2'
 services:
   mozart:
     hostname: mozart
     container_name: mozart
     image: hysds/mozart
+    init: true
     ports:
       - "10080:80"
       - "10443:443"
