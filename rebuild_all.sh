@@ -1,4 +1,6 @@
 #!/bin/bash
+BASE_PATH=$(dirname "${BASH_SOURCE}")
+BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
 if [ "$#" -ne 1 ]; then
   echo "Enter release date as arg: $0 <yyyymmdd>"
@@ -21,25 +23,38 @@ docker pull docker.io/rabbitmq:3-management || exit 1
 docker pull docker.io/centos:7 || exit 1
 docker tag docker.io/centos:7 docker.io/centos:latest || exit 1
 
-# build hysds/centos
-echo "#############################"
-echo "Building hysds/centos"
-echo "#############################"
-docker build --rm --force-rm -t hysds/centos:7_${REL_DATE} -f Dockerfile.hysds-centos7 /home/ops || exit 1
-docker tag hysds/centos:7_${REL_DATE} hysds/centos:7 || exit 1
-docker tag hysds/centos:7_${REL_DATE} hysds/centos:latest || exit 1
-docker push hysds/centos:7_${REL_DATE} || exit 1
-docker push hysds/centos:7 || exit 1
-docker push hysds/centos:latest || exit 1
+# make temp workspace
+TMP_DIR=$BASE_PATH/.tmp
+rm -rf $TMP_DIR
+mkdir $TMP_DIR
+cd $TMP_DIR
 
-# hysds/pge-minimal
+# build hysds/base
 echo "#############################"
-echo "Building hysds/pge-minimal"
+echo "Building hysds/base"
 echo "#############################"
-docker build --rm --force-rm -t hysds/pge-minimal:${REL_DATE} -f Dockerfile.hysds-pge-minimal --build-arg id=$ID --build-arg gid=$GID . || exit 1
-docker tag hysds/pge-minimal:${REL_DATE} hysds/pge-minimal:latest || exit 1
-docker push hysds/pge-minimal:${REL_DATE} || exit 1
-docker push hysds/pge-minimal:latest || exit 1
+git clone https://github.com/hysds/puppet-hysds_base.git hysds_base
+cd hysds_base
+./build_docker.sh ${REL_DATE} || exit 1
+docker tag hysds/base:${REL_DATE} hysds/base:latest || exit 1
+docker push hysds/base:${REL_DATE} || exit 1
+docker push hysds/base:latest || exit 1
+cd ..
+rm -rf hysds_base
+
+# build hysds/dev
+echo "#############################"
+echo "Building hysds/dev"
+echo "#############################"
+git clone https://github.com/hysds/puppet-hysds_dev.git hysds_dev
+cd hysds_dev
+./build_docker.sh ${REL_DATE} || exit 1
+docker tag hysds/dev:${REL_DATE} hysds/dev:latest || exit 1
+docker push hysds/dev:${REL_DATE} || exit 1
+docker push hysds/dev:latest || exit 1
+cd ..
+rm -rf hysds_dev
+cd $BASE_PATH
 
 # hysds/redis
 echo "#############################"
@@ -69,11 +84,17 @@ docker push hysds/rabbitmq:3-management || exit 1
 docker push hysds/rabbitmq:latest || exit 1
 
 # build worker hysds components
-for i in pge-base verdi; do
-  echo "#############################"
-  echo "Building hysds/$i"
-  echo "#############################"
-  docker build --rm --force-rm -t hysds/${i}:${REL_DATE} -f Dockerfile.hysds-${i} --build-arg id=$ID --build-arg gid=$GID /home/ops || exit 1
+echo "#############################"
+echo "Building hysds/pge-base hysds/verdi"
+echo "#############################"
+cd $TMP_DIR
+git clone -b docker-lite --single-branch https://github.com/hysds/puppet-verdi.git verdi
+cd verdi
+./build_docker.sh ${REL_DATE} || exit 1
+cd ..
+rm -rf verdi
+cd $BASE_PATH
+for i in verdi pge-base; do
   docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
   docker push hysds/${i}:${REL_DATE} || exit 1
   docker push hysds/${i}:latest || exit 1
@@ -95,3 +116,6 @@ for i in mozart metrics grq ci; do
   docker push hysds/${i}:${REL_DATE} || exit 1
   docker push hysds/${i}:latest || exit 1
 done
+
+# clean temp dir
+rm -rf $TMP_DIR
