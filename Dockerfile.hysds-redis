@@ -1,4 +1,4 @@
-FROM hysds/base:latest
+FROM hysds/centos:7
 
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="Redis image for HySDS"
