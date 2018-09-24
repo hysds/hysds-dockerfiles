@@ -1,9 +1,10 @@
-version: '2'
+version: '2.2'
 services:
   grq:
     hostname: grq
     container_name: grq
     image: hysds/grq
+    init: true
     ports:
       - "80:80"
       - "443:443"

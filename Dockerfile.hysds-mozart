@@ -1,18 +1,9 @@
-FROM hysds/centos:7
+FROM hysds/base:latest
 
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="Base mozart Centos7 image for HySDS"
 
 ENV GIT_URL https://github.com/hysds/puppet-mozart/raw/docker/install.sh
-
-ARG id
-ARG gid
-
-# create ops user/group syncing uid and gid with host
-RUN set -ex \
- && groupadd -r ops -g ${gid} \
- && useradd -u ${id} -r -g ops -d /home/ops -s /bin/bash -m ops \
- && usermod -aG docker ops
 
 # provision via puppet and install HySDS virtualenv
 RUN set -ex \

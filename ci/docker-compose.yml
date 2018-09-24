@@ -1,9 +1,10 @@
-version: '2'
+version: '2.2'
 services:
   ci:
     hostname: ci
     container_name: ci
     image: hysds/ci
+    init: true
     ports:
       - "80:80"
       - "443:443"

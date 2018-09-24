@@ -4,5 +4,5 @@ MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="RabbitMQ image for HySDS"
 
 # update configs
-COPY hysds-dockerfiles/configs/rabbitmq.config /etc/rabbitmq/rabbitmq.config
-COPY hysds-dockerfiles/configs/rabbitmq-server /etc/default/rabbitmq-server
+COPY configs/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+COPY configs/rabbitmq-server /etc/default/rabbitmq-server

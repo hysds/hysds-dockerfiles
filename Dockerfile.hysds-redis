@@ -1,4 +1,4 @@
-FROM hysds/centos:7
+FROM hysds/base:latest
 
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="Redis image for HySDS"
@@ -6,6 +6,7 @@ LABEL description="Redis image for HySDS"
 ENV GIT_URL https://github.com/hysds/puppet-redis/raw/master/install.sh
 
 # provision
+user root
 RUN set -ex \
  && yum update -y \
  && curl -skL ${GIT_URL} > /tmp/install.sh \
@@ -18,7 +19,7 @@ RUN set -ex \
 VOLUME /data/redis
 WORKDIR /data/redis
 
-COPY hysds-dockerfiles/configs/redis-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY configs/redis-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
