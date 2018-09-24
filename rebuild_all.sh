@@ -60,7 +60,7 @@ cd $BASE_PATH
 echo "#############################"
 echo "Building hysds/redis"
 echo "#############################"
-docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis /home/ops || exit 1
+docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis . || exit 1
 docker tag hysds/redis:${REL_DATE} hysds/redis:latest || exit 1
 docker push hysds/redis:${REL_DATE} || exit 1
 docker push hysds/redis:latest || exit 1
@@ -69,7 +69,7 @@ docker push hysds/redis:latest || exit 1
 echo "#############################"
 echo "Building hysds/elasticsearch"
 echo "#############################"
-docker build --rm --force-rm -t hysds/elasticsearch:1.7 -f Dockerfile.hysds-elasticsearch /home/ops || exit 1
+docker build --rm --force-rm -t hysds/elasticsearch:1.7 -f Dockerfile.hysds-elasticsearch . || exit 1
 docker tag hysds/elasticsearch:1.7 hysds/elasticsearch:latest || exit 1
 docker push hysds/elasticsearch:1.7 || exit 1
 docker push hysds/elasticsearch:latest || exit 1
@@ -78,7 +78,7 @@ docker push hysds/elasticsearch:latest || exit 1
 echo "#############################"
 echo "Building hysds/rabbitmq"
 echo "#############################"
-docker build --rm --force-rm -t hysds/rabbitmq:3-management -f Dockerfile.hysds-rabbitmq /home/ops || exit 1
+docker build --rm --force-rm -t hysds/rabbitmq:3-management -f Dockerfile.hysds-rabbitmq . || exit 1
 docker tag hysds/rabbitmq:3-management hysds/rabbitmq:latest || exit 1
 docker push hysds/rabbitmq:3-management || exit 1
 docker push hysds/rabbitmq:latest || exit 1

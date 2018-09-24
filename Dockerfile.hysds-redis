@@ -19,7 +19,7 @@ RUN set -ex \
 VOLUME /data/redis
 WORKDIR /data/redis
 
-COPY hysds-dockerfiles/configs/redis-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY configs/redis-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
