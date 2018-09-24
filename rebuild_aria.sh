@@ -39,17 +39,17 @@ rm -rf isce
 
 # export hysds/pge-isce_giant
 cd /data/docker_images/
-docker save hysds/pge-isce_giant:${REL_DATE} > hysds-pge-isce_giant-${REL_DATE}.tar
-echo "done saving"
-pigz -f hysds-pge-isce_giant-${REL_DATE}.tar
+#docker save hysds/pge-isce_giant:${REL_DATE} > hysds-pge-isce_giant-${REL_DATE}.tar
+#echo "done saving"
+#pigz -f hysds-pge-isce_giant-${REL_DATE}.tar
 docker save hysds/pge-isce_giant:latest > hysds-pge-isce_giant-latest.tar
 echo "done saving"
 pigz -f hysds-pge-isce_giant-latest.tar
 
 # export aria/isce_giant
-docker save aria/isce_giant:${REL_DATE} > aria-isce_giant-${REL_DATE}.tar
-echo "done saving"
-pigz -f aria-isce_giant-${REL_DATE}.tar
+#docker save aria/isce_giant:${REL_DATE} > aria-isce_giant-${REL_DATE}.tar
+#echo "done saving"
+#pigz -f aria-isce_giant-${REL_DATE}.tar
 docker save aria/isce_giant:latest > aria-isce_giant-latest.tar
 echo "done saving"
 pigz -f aria-isce_giant-latest.tar
