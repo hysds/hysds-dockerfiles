@@ -23,6 +23,33 @@ docker pull docker.io/rabbitmq:3-management || exit 1
 docker pull docker.io/centos:7 || exit 1
 docker tag docker.io/centos:7 docker.io/centos:latest || exit 1
 
+# hysds/redis
+echo "#############################"
+echo "Building hysds/redis"
+echo "#############################"
+docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis /home/ops || exit 1
+docker tag hysds/redis:${REL_DATE} hysds/redis:latest || exit 1
+docker push hysds/redis:${REL_DATE} || exit 1
+docker push hysds/redis:latest || exit 1
+
+# hysds/elasticsearch
+echo "#############################"
+echo "Building hysds/elasticsearch"
+echo "#############################"
+docker build --rm --force-rm -t hysds/elasticsearch:1.7 -f Dockerfile.hysds-elasticsearch /home/ops || exit 1
+docker tag hysds/elasticsearch:1.7 hysds/elasticsearch:latest || exit 1
+docker push hysds/elasticsearch:1.7 || exit 1
+docker push hysds/elasticsearch:latest || exit 1
+
+# hysds/rabbitmq
+echo "#############################"
+echo "Building hysds/rabbitmq"
+echo "#############################"
+docker build --rm --force-rm -t hysds/rabbitmq:3-management -f Dockerfile.hysds-rabbitmq /home/ops || exit 1
+docker tag hysds/rabbitmq:3-management hysds/rabbitmq:latest || exit 1
+docker push hysds/rabbitmq:3-management || exit 1
+docker push hysds/rabbitmq:latest || exit 1
+
 # make temp workspace
 TMP_DIR=$BASE_PATH/.tmp
 rm -rf $TMP_DIR
@@ -56,37 +83,10 @@ cd ..
 rm -rf hysds_dev
 cd $BASE_PATH
 
-# hysds/redis
-echo "#############################"
-echo "Building hysds/redis"
-echo "#############################"
-docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis /home/ops || exit 1
-docker tag hysds/redis:${REL_DATE} hysds/redis:latest || exit 1
-docker push hysds/redis:${REL_DATE} || exit 1
-docker push hysds/redis:latest || exit 1
-
-# hysds/elasticsearch
-echo "#############################"
-echo "Building hysds/elasticsearch"
-echo "#############################"
-docker build --rm --force-rm -t hysds/elasticsearch:1.7 -f Dockerfile.hysds-elasticsearch /home/ops || exit 1
-docker tag hysds/elasticsearch:1.7 hysds/elasticsearch:latest || exit 1
-docker push hysds/elasticsearch:1.7 || exit 1
-docker push hysds/elasticsearch:latest || exit 1
-
-# hysds/rabbitmq
-echo "#############################"
-echo "Building hysds/rabbitmq"
-echo "#############################"
-docker build --rm --force-rm -t hysds/rabbitmq:3-management -f Dockerfile.hysds-rabbitmq /home/ops || exit 1
-docker tag hysds/rabbitmq:3-management hysds/rabbitmq:latest || exit 1
-docker push hysds/rabbitmq:3-management || exit 1
-docker push hysds/rabbitmq:latest || exit 1
-
 # build worker hysds components
-echo "#############################"
-echo "Building hysds/pge-base hysds/verdi"
-echo "#############################"
+echo "#######################################"
+echo "Building hysds/pge-base and hysds/verdi"
+echo "#######################################"
 cd $TMP_DIR
 git clone -b docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
 cd verdi
@@ -107,11 +107,17 @@ docker save hysds/verdi:latest > hysds-verdi-latest.tar; echo "done saving"; pig
 cd -
 
 # build hysds components
-for i in mozart metrics grq ci; do
+for i in mozart metrics grq cont_int; do
   echo "#############################"
   echo "Building hysds/$i"
   echo "#############################"
-  docker build --rm --force-rm -t hysds/${i}:${REL_DATE} -f Dockerfile.hysds-${i} --build-arg id=$ID --build-arg gid=$GID /home/ops || exit 1
+  cd $TMP_DIR
+  git clone -b docker --single-branch https://github.com/hysds/puppet-${i} ${i}
+  cd ${i}
+  ./build_docker.sh ${REL_DATE} || exit 1
+  cd ..
+  rm -rf ${i}
+  cd $BASE_PATH
   docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
   docker push hysds/${i}:${REL_DATE} || exit 1
   docker push hysds/${i}:latest || exit 1
