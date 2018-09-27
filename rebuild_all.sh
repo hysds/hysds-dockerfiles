@@ -37,8 +37,11 @@ git clone https://github.com/hysds/puppet-hysds_base.git hysds_base
 cd hysds_base
 ./build_docker.sh ${REL_DATE} || exit 1
 docker tag hysds/base:${REL_DATE} hysds/base:latest || exit 1
+docker tag hysds/cuda-base:${REL_DATE} hysds/cuda-base:latest || exit 1
 docker push hysds/base:${REL_DATE} || exit 1
+docker push hysds/cuda-base:${REL_DATE} || exit 1
 docker push hysds/base:latest || exit 1
+docker push hysds/cuda-base:latest || exit 1
 cd ..
 rm -rf hysds_base
 
@@ -50,8 +53,11 @@ git clone https://github.com/hysds/puppet-hysds_dev.git hysds_dev
 cd hysds_dev
 ./build_docker.sh ${REL_DATE} || exit 1
 docker tag hysds/dev:${REL_DATE} hysds/dev:latest || exit 1
+docker tag hysds/cuda-dev:${REL_DATE} hysds/cuda-dev:latest || exit 1
 docker push hysds/dev:${REL_DATE} || exit 1
+docker push hysds/cuda-dev:${REL_DATE} || exit 1
 docker push hysds/dev:latest || exit 1
+docker push hysds/cuda-dev:latest || exit 1
 cd ..
 rm -rf hysds_dev
 cd $BASE_PATH
