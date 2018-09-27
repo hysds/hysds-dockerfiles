@@ -38,7 +38,7 @@ cd ..
 rm -rf isce
 
 # export hysds/pge-isce_giant
-cd /data/docker_images/
+cd $BASE_PATH
 #docker save hysds/pge-isce_giant:${REL_DATE} > hysds-pge-isce_giant-${REL_DATE}.tar
 #echo "done saving"
 #pigz -f hysds-pge-isce_giant-${REL_DATE}.tar
