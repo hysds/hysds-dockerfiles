@@ -104,6 +104,11 @@ for i in verdi pge-base; do
   docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
   docker push hysds/${i}:${REL_DATE} || exit 1
   docker push hysds/${i}:latest || exit 1
+  if [ "$i" = "pge-base" ]; then
+    docker tag hysds/cuda-${i}:${REL_DATE} hysds/cuda-${i}:latest || exit 1
+    docker push hysds/cuda-${i}:${REL_DATE} || exit 1
+    docker push hysds/cuda-${i}:latest || exit 1
+  fi
 done
 
 # export verdi
