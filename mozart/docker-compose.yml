@@ -24,13 +24,13 @@ services:
     volumes_from:
       - redis
     links:
-      - rabbit
+      - rabbitmq
       - redis
       - elasticsearch
-  rabbit:
+  rabbitmq:
     image: hysds/rabbitmq
-    hostname: mozart-rabbit
-    container_name: mozart-rabbit
+    hostname: mozart-rabbitmq
+    container_name: mozart-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"

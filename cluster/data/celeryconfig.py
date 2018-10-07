@@ -1,4 +1,4 @@
-BROKER_URL = "amqp://guest@mozart-rabbit:5672//"
+BROKER_URL = "amqp://guest@mozart-rabbitmq:5672//"
 CELERY_RESULT_BACKEND = "redis://mozart-redis"
 
 CELERY_TASK_SERIALIZER = "msgpack"
@@ -31,7 +31,7 @@ CELERY_SEND_TASK_ERROR_EMAILS = False
 ADMINS = (
     ('"Gerald Manipon"', 'pymonger@gmail.com'),
 )
-SERVER_EMAIL = 'ops@mozart-rabbit'
+SERVER_EMAIL = 'ops@mozart-rabbitmq'
 
 HYSDS_HANDLE_SIGNALS = False
 HYSDS_JOB_STATUS_EXPIRES = 86400
@@ -41,7 +41,7 @@ BACKOFF_MAX_TRIES = 10
 
 PYMONITOREDRUNNER_CFG = {
     "rabbitmq": {
-        "hostname": "mozart-rabbit",
+        "hostname": "mozart-rabbitmq",
         "port": 5672,
         "queue": "stdouterr"
     },

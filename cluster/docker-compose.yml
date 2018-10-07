@@ -26,17 +26,17 @@ services:
     volumes_from:
       - mozart-redis
     links:
-      - mozart-rabbit
+      - mozart-rabbitmq
       - mozart-redis
       - mozart-elasticsearch
     depends_on:
-      - mozart-rabbit
+      - mozart-rabbitmq
       - mozart-redis
       - mozart-elasticsearch
-  mozart-rabbit:
+  mozart-rabbitmq:
     image: hysds/rabbitmq
-    hostname: mozart-rabbit
-    container_name: mozart-rabbit
+    hostname: mozart-rabbitmq
+    container_name: mozart-rabbitmq
     ports:
       - "15672:5672"
       - "25672:15672"

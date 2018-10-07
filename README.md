@@ -108,7 +108,7 @@ docker tag hysds/mozart:<YYYYMMDD> hysds/mozart:latest
 
 3. Run mozart via docker:
 ```
-docker run -d --hostname mozart --name mozart --link mozart-rabbit:rabbit \
+docker run -d --hostname mozart --name mozart --link mozart-rabbitmq:rabbitmq \
        --link mozart-redis:redis --link mozart-elasticsearch:elasticsearch -p 80:80 \
        -p 443:443 -p 5555:5555 -p 8888:8888 -p 9001:9001 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
        -v /data/mozart/etc:/home/ops/mozart/etc -v /data/mozart/log:/home/ops/mozart/log \
