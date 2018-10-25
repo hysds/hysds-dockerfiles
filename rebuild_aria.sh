@@ -28,7 +28,7 @@ cd $TMP_DIR
 echo "#############################"
 echo "Building hysds/pge-isce_giant"
 echo "#############################"
-git clone -b docker-lite --single-branch https://${GIT_OAUTH_TOKEN}@github.jpl.nasa.gov/aria-hysds/puppet-isce.git isce
+git clone -b docker-lite-isce2.2 --single-branch https://${GIT_OAUTH_TOKEN}@github.jpl.nasa.gov/aria-hysds/puppet-isce.git isce
 cd isce
 ./build_docker.sh ${REL_DATE} ${GIT_OAUTH_TOKEN} || exit 1
 docker tag hysds/pge-isce_giant:${REL_DATE} hysds/pge-isce_giant:latest || exit 1
