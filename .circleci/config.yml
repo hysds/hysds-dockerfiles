@@ -22,7 +22,7 @@ jobs:
       - persist_to_workspace:
           root: images
           paths:
-            - *
+            - "*"
   deploy:
     docker:
       - image: alpine:latest
