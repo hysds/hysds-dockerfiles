@@ -7,6 +7,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: List
+          command: |
+            pwd; ls
+      - run:
           name: Build
           command: |
             ./rebuild_all.sh $(date -u +%Y%m%d)
