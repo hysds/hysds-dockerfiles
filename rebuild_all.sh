@@ -29,6 +29,10 @@ rm -rf $TMP_DIR
 mkdir $TMP_DIR
 cd $TMP_DIR
 
+# create artifacts directory
+IMG_DIR=${BASE_PATH}/images
+mkdir -p $IMG_DIR
+
 # build hysds/base
 echo "#############################"
 echo "Building hysds/base"
@@ -112,7 +116,7 @@ for i in verdi pge-base; do
 done
 
 # export verdi
-cd $BASE_PATH
+cd $IMG_DIR
 #docker save hysds/verdi:${REL_DATE} > hysds-verdi-${REL_DATE}.tar; echo "done saving"; pigz -f hysds-verdi-${REL_DATE}.tar
 docker save hysds/verdi:latest > hysds-verdi-latest.tar; echo "done saving"; pigz -f hysds-verdi-latest.tar
 cd -

@@ -19,6 +19,29 @@ jobs:
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             ./rebuild_all.sh $TAG
+  deploy:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              curl file
+      - run:
+          name: Deploy
+          command: |
+            cd images
+            owner=hysds
+            repo=hysds-dockerfiles
+            release_id=$(curl -s -H "Authorization: token $GIT_OAUTH_TOKEN" \
+              "https://api.github.com/repos/${owner}/${repo}/releases/latest" \
+              | grep '^  "id":' | awk '{print $2}' | sed 's/,//')
+            file=hysds-verdi-latest.tar.gz
+            curl -H "Authorization: token $GIT_OAUTH_TOKEN" -H \
+              "Content-type: $(file -b --mime-type ${file})" \
+              --data-binary @${file} \
+              "https://uploads.github.com/repos/${owner}/${repo}/releases/${release_id}/assets?name=${file}"
 
 workflows:
   version: 2
@@ -28,9 +51,9 @@ workflows:
           filters:
             branches:
               only: master
-      #- deploy:
-      #    requires:
-      #      - build
-      #    filters:
-      #      branches:
-      #        only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
