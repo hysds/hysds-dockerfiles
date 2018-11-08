@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -7,14 +7,8 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: pwd
-          command: |
-            pwd
-      - run:
-          name: ls
-          command: |
-            ls -al
-      - run:
           name: Build
           command: |
+            pwd
+            ls -al
             ./rebuild_all.sh $(date -u +%Y%m%d)
