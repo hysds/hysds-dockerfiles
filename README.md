@@ -1,5 +1,8 @@
 # HySDS Dockerfiles
 
+[![CircleCI](https://circleci.com/gh/hysds/hysds-dockerfiles/tree/master.svg?style=svg)](https://circleci.com/gh/hysds/hysds-dockerfiles/tree/master)
+
+
 Install Docker
 --------------
 
