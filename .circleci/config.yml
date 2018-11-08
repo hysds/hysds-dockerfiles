@@ -1,10 +1,6 @@
 version: 2.1
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - /rc-.*/
     docker:
       - image: docker:18.06.1-ce-git
     steps:
@@ -23,3 +19,18 @@ jobs:
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             ./rebuild_all.sh $TAG
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
