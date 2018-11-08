@@ -16,4 +16,6 @@ jobs:
       - run:
           name: Build
           command: |
-            ./rebuild_all.sh $(date -u +%Y%m%d)
+            TAG=$(date -u +%Y%m%d)
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            ./rebuild_all.sh $TAG
