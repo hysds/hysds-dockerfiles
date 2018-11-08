@@ -19,6 +19,10 @@ jobs:
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             ./rebuild_all.sh $TAG
+      - persist_to_workspace:
+          root: images
+          paths:
+            - *
   deploy:
     docker:
       - image: alpine:latest
@@ -28,6 +32,8 @@ jobs:
           command: |
             apk add --no-cache \
               curl file
+      - attach_workspace:
+          at: images
       - run:
           name: Deploy
           command: |
