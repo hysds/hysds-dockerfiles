@@ -7,8 +7,13 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip bash
+            pip install \
+              docker-compose awscli
+      - run:
           name: Build
           command: |
-            pwd
-            ls -al
-            sh rebuild_all.sh $(date -u +%Y%m%d)
+            ./rebuild_all.sh $(date -u +%Y%m%d)
