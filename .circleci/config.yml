@@ -23,7 +23,7 @@ jobs:
           root: images
           paths:
             - "*"
-  build-nightly:
+  build-periodically:
     docker:
       - image: docker:18.06.1-ce-git
     steps:
@@ -41,7 +41,7 @@ jobs:
           command: |
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./rebuild_nightly.sh $TAG
+            ./rebuild_periodically.sh $TAG
       - persist_to_workspace:
           root: images
           paths:
@@ -86,16 +86,16 @@ workflows:
           filters:
             branches:
               only: master
-  nightly:
+  weekly:
     triggers:
       - schedule:
-          cron: "39 1 * * *"
+          cron: "0 0 * * 0"
           filters:
             branches:
               only:
                 - master
     jobs:
-      - build-nightly:
+      - build-periodically:
           filters:
             branches:
               only: master
