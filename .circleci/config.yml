@@ -41,7 +41,7 @@ jobs:
           command: |
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./rebuild_periodically.sh $TAG
+            ./rebuild_periodically.sh $TAG weekly
       - persist_to_workspace:
           root: images
           paths:
