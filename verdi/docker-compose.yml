@@ -21,3 +21,4 @@ services:
       - "${HOME}/.boto:/home/ops/.boto"
       - "${HOME}/.s3cfg:/home/ops/.s3cfg"
       - "${HOME}/.netrc:/home/ops/.netrc"
+      - "${HOME}/.config:/home/ops/.config"
