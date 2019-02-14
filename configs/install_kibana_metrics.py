@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-import os, sys, json, requests, time
+import os
+import sys
+import json
+import requests
+import time
 from requests.exceptions import ConnectionError
 
 
@@ -27,9 +31,10 @@ def install(cfg_file):
         r2 = requests.put(url, data=json.dumps(data))
         r2.raise_for_status()
         print("Installed %s." % cfg_file)
-    else: r.raise_for_status()
+    else:
+        r.raise_for_status()
 
-     
+
 if __name__ == "__main__":
     print("Waiting for ElasticSearch to start up.")
     count = 0
@@ -37,8 +42,10 @@ if __name__ == "__main__":
         try:
             r = requests.get(ES_URL)
             print("status_code: %s" % r.status_code)
-            if r.status_code == 200: break
-        except ConnectionError, e: print(e)
+            if r.status_code == 200:
+                break
+        except ConnectionError, e:
+            print(e)
         time.sleep(2**count)
         count += 1
     install('/tmp/Job_Metrics.json')
