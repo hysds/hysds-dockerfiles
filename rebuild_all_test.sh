@@ -41,13 +41,13 @@ echo "Building hysds/base"
 echo "#############################"
 git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_base.git hysds_base
 cd hysds_base
-./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
-docker tag hysds/base:${REL_DATE} hysds/base:latest || exit 1
-docker tag hysds/cuda-base:${REL_DATE} hysds/cuda-base:latest || exit 1
-#docker push hysds/base:${REL_DATE} || exit 1
-#docker push hysds/cuda-base:${REL_DATE} || exit 1
-#docker push hysds/base:latest || exit 1
-#docker push hysds/cuda-base:latest || exit 1
+./build_docker.sh ${REL_DATE}-${BRANCH} ${ORG} ${BRANCH} || exit 1
+docker tag hysds/base:${REL_DATE}-${BRANCH} hysds/base:${BRANCH} || exit 1
+docker tag hysds/cuda-base:${REL_DATE}-${BRANCH} hysds/cuda-base:${BRANCH} || exit 1
+docker push hysds/base:${REL_DATE}-${BRANCH} || exit 1
+docker push hysds/cuda-base:${REL_DATE}-${BRANCH} || exit 1
+docker push hysds/base:${BRANCH} || exit 1
+docker push hysds/cuda-base:${BRANCH} || exit 1
 cd ..
 rm -rf hysds_base
 
@@ -57,13 +57,13 @@ echo "Building hysds/dev"
 echo "#############################"
 git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_dev.git hysds_dev
 cd hysds_dev
-./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
-docker tag hysds/dev:${REL_DATE} hysds/dev:latest || exit 1
-docker tag hysds/cuda-dev:${REL_DATE} hysds/cuda-dev:latest || exit 1
-#docker push hysds/dev:${REL_DATE} || exit 1
-#docker push hysds/cuda-dev:${REL_DATE} || exit 1
-#docker push hysds/dev:latest || exit 1
-#docker push hysds/cuda-dev:latest || exit 1
+./build_docker.sh ${REL_DATE}-${BRANCH} ${ORG} ${BRANCH} || exit 1
+docker tag hysds/dev:${REL_DATE}-${BRANCH} hysds/dev:${BRANCH} || exit 1
+docker tag hysds/cuda-dev:${REL_DATE}-${BRANCH} hysds/cuda-dev:${BRANCH} || exit 1
+docker push hysds/dev:${REL_DATE}-${BRANCH} || exit 1
+docker push hysds/cuda-dev:${REL_DATE}-${BRANCH} || exit 1
+docker push hysds/dev:${BRANCH} || exit 1
+docker push hysds/cuda-dev:${BRANCH} || exit 1
 cd ..
 rm -rf hysds_dev
 cd $BASE_PATH
