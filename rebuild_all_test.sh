@@ -68,16 +68,14 @@ cd ..
 rm -rf hysds_dev
 cd $BASE_PATH
 
-exit
-
 # hysds/redis
 echo "#############################"
 echo "Building hysds/redis"
 echo "#############################"
-docker build --rm --force-rm -t hysds/redis:${REL_DATE} -f Dockerfile.hysds-redis . || exit 1
-docker tag hysds/redis:${REL_DATE} hysds/redis:latest || exit 1
-docker push hysds/redis:${REL_DATE} || exit 1
-docker push hysds/redis:latest || exit 1
+docker build --rm --force-rm -t hysds/redis:${REL_DATE}-${BRANCH} -f Dockerfile.hysds-redis . || exit 1
+docker tag hysds/redis:${REL_DATE}-${BRANCH} hysds/redis:${BRANCH} || exit 1
+docker push hysds/redis:${REL_DATE}-${BRANCH} || exit 1
+docker push hysds/redis:${BRANCH} || exit 1
 
 # hysds/elasticsearch
 echo "#############################"
@@ -102,27 +100,27 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
+git clone -b docker-python3 --single-branch https://github.com/hysds/puppet-verdi.git verdi
 cd verdi
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh ${REL_DATE}-${BRANCH} || exit 1
 cd ..
 rm -rf verdi
 cd $BASE_PATH
 for i in verdi pge-base; do
-  docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
-  docker push hysds/${i}:${REL_DATE} || exit 1
-  docker push hysds/${i}:latest || exit 1
+  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python3 || exit 1
+  docker push hysds/${i}:${REL_DATE}-${BRANCH} || exit 1
+  docker push hysds/${i}:python3 || exit 1
   if [ "$i" = "pge-base" ]; then
-    docker tag hysds/cuda-${i}:${REL_DATE} hysds/cuda-${i}:latest || exit 1
-    docker push hysds/cuda-${i}:${REL_DATE} || exit 1
-    docker push hysds/cuda-${i}:latest || exit 1
+    docker tag hysds/cuda-${i}:${REL_DATE}-${BRANCH} hysds/cuda-${i}:python3 || exit 1
+    docker push hysds/cuda-${i}:${REL_DATE}-${BRANCH} || exit 1
+    docker push hysds/cuda-${i}:python3 || exit 1
   fi
 done
 
 # export verdi
 cd $IMG_DIR
 #docker save hysds/verdi:${REL_DATE} > hysds-verdi-${REL_DATE}.tar; echo "done saving"; pigz -f hysds-verdi-${REL_DATE}.tar
-docker save hysds/verdi:latest > hysds-verdi-latest.tar; echo "done saving"; pigz -f hysds-verdi-latest.tar
+docker save hysds/verdi:python3 > hysds-verdi-python3.tar; echo "done saving"; pigz -f hysds-verdi-python3.tar
 cd -
 
 # build hysds components
@@ -131,15 +129,15 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker --single-branch https://github.com/hysds/puppet-${i} ${i}
+  git clone -b docker-python3 --single-branch https://github.com/hysds/puppet-${i} ${i}
   cd ${i}
-  ./build_docker.sh ${REL_DATE} || exit 1
+  ./build_docker.sh ${REL_DATE}-${BRANCH} || exit 1
   cd ..
   rm -rf ${i}
   cd $BASE_PATH
-  docker tag hysds/${i}:${REL_DATE} hysds/${i}:latest || exit 1
-  docker push hysds/${i}:${REL_DATE} || exit 1
-  docker push hysds/${i}:latest || exit 1
+  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python3 || exit 1
+  docker push hysds/${i}:${REL_DATE}-${BRANCH} || exit 1
+  docker push hysds/${i}:python3 || exit 1
 done
 
 # clean temp dir
