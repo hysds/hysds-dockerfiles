@@ -1,4 +1,6 @@
 #!/bin/bash
+# usage: ./rebuild_all-python3.sh $(date -u +%Y%m%d) hysds python3
+
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
