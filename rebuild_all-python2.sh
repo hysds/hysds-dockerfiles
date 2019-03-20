@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage: ./rebuild_all-python3.sh $(date -u +%Y%m%d) hysds python3
+# usage: ./rebuild_all-python2.sh $(date -u +%Y%m%d) hysds python2
 
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
@@ -102,27 +102,27 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker-python3 --single-branch https://github.com/hysds/puppet-verdi.git verdi
+git clone -b python2-docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${REL_DATE}-${BRANCH} || exit 1
 cd ..
 rm -rf verdi
 cd $BASE_PATH
 for i in verdi pge-base; do
-  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python3 || exit 1
+  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python2 || exit 1
   docker push hysds/${i}:${REL_DATE}-${BRANCH} || exit 1
-  docker push hysds/${i}:python3 || exit 1
+  docker push hysds/${i}:python2 || exit 1
   if [ "$i" = "pge-base" ]; then
-    docker tag hysds/cuda-${i}:${REL_DATE}-${BRANCH} hysds/cuda-${i}:python3 || exit 1
+    docker tag hysds/cuda-${i}:${REL_DATE}-${BRANCH} hysds/cuda-${i}:python2 || exit 1
     docker push hysds/cuda-${i}:${REL_DATE}-${BRANCH} || exit 1
-    docker push hysds/cuda-${i}:python3 || exit 1
+    docker push hysds/cuda-${i}:python2 || exit 1
   fi
 done
 
 # export verdi
 cd $IMG_DIR
 #docker save hysds/verdi:${REL_DATE} > hysds-verdi-${REL_DATE}.tar; echo "done saving"; pigz -f hysds-verdi-${REL_DATE}.tar
-docker save hysds/verdi:python3 > hysds-verdi-python3.tar; echo "done saving"; pigz -f hysds-verdi-python3.tar
+docker save hysds/verdi:python2 > hysds-verdi-python2.tar; echo "done saving"; pigz -f hysds-verdi-python2.tar
 cd -
 
 # build hysds components
@@ -131,15 +131,15 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker-python3 --single-branch https://github.com/hysds/puppet-${i} ${i}
+  git clone -b python-2docker --single-branch https://github.com/hysds/puppet-${i} ${i}
   cd ${i}
   ./build_docker.sh ${REL_DATE}-${BRANCH} || exit 1
   cd ..
   rm -rf ${i}
   cd $BASE_PATH
-  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python3 || exit 1
+  docker tag hysds/${i}:${REL_DATE}-${BRANCH} hysds/${i}:python2 || exit 1
   docker push hysds/${i}:${REL_DATE}-${BRANCH} || exit 1
-  docker push hysds/${i}:python3 || exit 1
+  docker push hysds/${i}:python2 || exit 1
 done
 
 # clean temp dir
