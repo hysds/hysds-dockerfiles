@@ -1,13 +1,17 @@
 #!/bin/bash
+# usage: ./rebuild_all.sh $(date -u +%Y%m%d) hysds master
+
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
-if [ "$#" -ne 1 ]; then
-  echo "Enter release date as arg: $0 <yyyymmdd>"
-  echo "e.g.: $0 20170620"
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 <yyyymmdd> <org> <branch>"
+  echo "e.g.: $0 20170620 hysds master"
   exit 1
 fi
 REL_DATE=$1
+ORG=$2
+BRANCH=$3
 
 # get uid and gid
 ID=$(id -u)
@@ -37,9 +41,9 @@ mkdir -p $IMG_DIR
 echo "#############################"
 echo "Building hysds/base"
 echo "#############################"
-git clone https://github.com/hysds/puppet-hysds_base.git hysds_base
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_base.git hysds_base
 cd hysds_base
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
 docker tag hysds/base:${REL_DATE} hysds/base:latest || exit 1
 docker tag hysds/cuda-base:${REL_DATE} hysds/cuda-base:latest || exit 1
 docker push hysds/base:${REL_DATE} || exit 1
@@ -53,9 +57,9 @@ rm -rf hysds_base
 echo "#############################"
 echo "Building hysds/dev"
 echo "#############################"
-git clone https://github.com/hysds/puppet-hysds_dev.git hysds_dev
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_dev.git hysds_dev
 cd hysds_dev
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
 docker tag hysds/dev:${REL_DATE} hysds/dev:latest || exit 1
 docker tag hysds/cuda-dev:${REL_DATE} hysds/cuda-dev:latest || exit 1
 docker push hysds/dev:${REL_DATE} || exit 1

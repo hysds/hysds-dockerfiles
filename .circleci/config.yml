@@ -18,7 +18,7 @@ jobs:
           command: |
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./rebuild_all.sh $TAG
+            ./rebuild_all.sh $TAG hysds master
       - persist_to_workspace:
           root: images
           paths:
