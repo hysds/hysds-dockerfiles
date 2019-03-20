@@ -121,10 +121,6 @@ PACKAGE=hysds
 if [ ! -d "$OPS/$PACKAGE" ]; then
   git clone ${GIT_URL}/hysds/${PACKAGE}.git
 fi
-pip install -U  greenlet
-pip install -U  pytz
-pip uninstall -y flower
-pip uninstall -y celery
 cd $OPS/$PACKAGE/third_party/celery-v4.2.1
 pip install -e .
 cd $OPS/$PACKAGE
