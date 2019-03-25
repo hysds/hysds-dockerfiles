@@ -2,20 +2,25 @@
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
-if [ "$#" -ne 2 ]; then
-  echo "Enter release date and period as arg: $0 <yyyymmdd> <period>"
-  echo "e.g.: $0 20170620 nightly"
-  echo "e.g.: $0 20170620 weekly"
+if [ "$#" -ne 4 ]; then
+  echo "Enter release date, period, org and branch as arg: $0 <yyyymmdd> <period>"
+  echo "e.g.: $0 20170620 nightly hysds master"
+  echo "e.g.: $0 20170620 weekly hysds master"
   exit 1
 fi
 REL_DATE=$1
 PERIOD=$2
+ORG=$3
+BRANCH=$4
 
 # get uid and gid
 ID=$(id -u)
 GID=$(id -g)
 
 echo "REL_DATE is $REL_DATE"
+echo "PERIOD is $PERIOD"
+echo "ORG is $ORG"
+echo "BRANCH is $BRANCH"
 echo "ID is $ID"
 echo "GID is $GID"
 
@@ -39,9 +44,9 @@ mkdir -p $IMG_DIR
 echo "#############################"
 echo "Building hysds/base"
 echo "#############################"
-git clone https://github.com/hysds/puppet-hysds_base.git hysds_base
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_base.git hysds_base
 cd hysds_base
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
 docker tag hysds/base:${REL_DATE} hysds/base:${PERIOD} || exit 1
 docker tag hysds/cuda-base:${REL_DATE} hysds/cuda-base:${PERIOD} || exit 1
 docker push hysds/base:${PERIOD} || exit 1
@@ -53,9 +58,9 @@ rm -rf hysds_base
 echo "#############################"
 echo "Building hysds/dev"
 echo "#############################"
-git clone https://github.com/hysds/puppet-hysds_dev.git hysds_dev
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_dev.git hysds_dev
 cd hysds_dev
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh ${REL_DATE} ${ORG} ${BRANCH} || exit 1
 docker tag hysds/dev:${REL_DATE} hysds/dev:${PERIOD} || exit 1
 docker tag hysds/cuda-dev:${REL_DATE} hysds/cuda-dev:${PERIOD} || exit 1
 docker push hysds/dev:${PERIOD} || exit 1
@@ -93,7 +98,7 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
+git clone -b docker --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${REL_DATE} || exit 1
 cd ..
@@ -120,7 +125,7 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker --single-branch https://github.com/hysds/puppet-${i} ${i}
+  git clone -b docker --single-branch https://github.com/${ORG}/puppet-${i} ${i}
   cd ${i}
   ./build_docker.sh ${REL_DATE} || exit 1
   cd ..

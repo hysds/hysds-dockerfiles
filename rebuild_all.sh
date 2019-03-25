@@ -102,7 +102,7 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker --single-branch https://github.com/hysds/puppet-verdi.git verdi
+git clone -b docker --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${REL_DATE} || exit 1
 cd ..
@@ -131,7 +131,7 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker --single-branch https://github.com/hysds/puppet-${i} ${i}
+  git clone -b docker --single-branch https://github.com/${ORG}/puppet-${i} ${i}
   cd ${i}
   ./build_docker.sh ${REL_DATE} || exit 1
   cd ..

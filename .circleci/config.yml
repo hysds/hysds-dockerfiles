@@ -41,7 +41,7 @@ jobs:
           command: |
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./rebuild_periodically.sh $TAG weekly
+            ./rebuild_periodically.sh $TAG weekly hysds master
       - persist_to_workspace:
           root: images
           paths:
@@ -89,7 +89,7 @@ workflows:
   weekly:
     triggers:
       - schedule:
-          cron: "0 0 * * 0"
+          cron: "0 7 * * 0"
           filters:
             branches:
               only:
