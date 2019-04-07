@@ -10,7 +10,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache \
-              python-dev py-pip bash pigz build-base libffi-dev
+              python-dev py-pip bash pigz build-base libffi-dev openssl-dev
             pip install \
               docker-compose awscli
       - run:
@@ -33,7 +33,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache \
-              python-dev py-pip bash pigz build-base libffi-dev
+              python-dev py-pip bash pigz build-base libffi-dev openssl-dev
             pip install \
               docker-compose awscli
       - run:
