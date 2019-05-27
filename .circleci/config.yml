@@ -16,9 +16,10 @@ jobs:
       - run:
           name: Build
           command: |
-            TAG=$(date -u +%Y%m%d)
+            echo "GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN}" > $HOME/.git_oauth_token
+            TAG=develop
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./rebuild_all.sh $TAG hysds master
+            ./build_release.sh $TAG hysds master
       - persist_to_workspace:
           root: images
           paths:
@@ -39,6 +40,7 @@ jobs:
       - run:
           name: Build
           command: |
+            echo "GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN}" > $HOME/.git_oauth_token
             TAG=$(date -u +%Y%m%d)
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             ./rebuild_periodically.sh $TAG weekly hysds master
