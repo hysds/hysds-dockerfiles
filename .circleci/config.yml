@@ -18,7 +18,7 @@ jobs:
           command: |
             echo "GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN}" > $HOME/.git_oauth_token
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./build_release.sh $CIRCLE_TAG hysds master
+            ./build_release.sh $CIRCLE_BRANCH hysds master
       - persist_to_workspace:
           root: images
           paths:
@@ -67,7 +67,7 @@ jobs:
             release_id=$(curl -s -H "Authorization: token $GIT_OAUTH_TOKEN" \
               "https://api.github.com/repos/${owner}/${repo}/releases/latest" \
               | grep '^  "id":' | awk '{print $2}' | sed 's/,//')
-            file=hysds-verdi-${CIRCLE_TAG}.tar.gz
+            file=hysds-verdi-${CIRCLE_BRANCH}.tar.gz
             curl -H "Authorization: token $GIT_OAUTH_TOKEN" -H \
               "Content-type: $(file -b --mime-type ${file})" \
               --data-binary @${file} \
