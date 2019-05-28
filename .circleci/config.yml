@@ -82,13 +82,13 @@ workflows:
       - build:
           filters:
             branches:
-              only: master
+              only: develop
       - deploy:
           requires:
             - build
           filters:
             branches:
-              only: master
+              only: develop
   weekly:
     triggers:
       - schedule:
@@ -96,9 +96,9 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - develop
     jobs:
       - build-periodically:
           filters:
             branches:
-              only: master
+              only: develop
