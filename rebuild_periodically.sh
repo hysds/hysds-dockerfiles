@@ -100,15 +100,15 @@ echo "#######################################"
 cd $TMP_DIR
 git clone -b docker --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
 cd verdi
-./build_docker.sh ${REL_DATE} || exit 1
+./build_docker.sh develop || exit 1
 cd ..
 rm -rf verdi
 cd $BASE_PATH
 for i in verdi pge-base; do
-  docker tag hysds/${i}:${REL_DATE} hysds/${i}:${PERIOD} || exit 1
+  docker tag hysds/${i}:develop hysds/${i}:${PERIOD} || exit 1
   docker push hysds/${i}:${PERIOD} || exit 1
   if [ "$i" = "pge-base" ]; then
-    docker tag hysds/cuda-${i}:${REL_DATE} hysds/cuda-${i}:${PERIOD} || exit 1
+    docker tag hysds/cuda-${i}:develop hysds/cuda-${i}:${PERIOD} || exit 1
     docker push hysds/cuda-${i}:${PERIOD} || exit 1
   fi
 done
@@ -127,11 +127,11 @@ for i in mozart metrics grq cont_int; do
   cd $TMP_DIR
   git clone -b docker --single-branch https://github.com/${ORG}/puppet-${i} ${i}
   cd ${i}
-  ./build_docker.sh ${REL_DATE} || exit 1
+  ./build_docker.sh develop || exit 1
   cd ..
   rm -rf ${i}
   cd $BASE_PATH
-  docker tag hysds/${i}:${REL_DATE} hysds/${i}:${PERIOD} || exit 1
+  docker tag hysds/${i}:develop hysds/${i}:${PERIOD} || exit 1
   docker push hysds/${i}:${PERIOD} || exit 1
 done
 
