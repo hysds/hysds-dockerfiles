@@ -121,8 +121,6 @@ PACKAGE=hysds
 if [ ! -d "$OPS/$PACKAGE" ]; then
   git clone ${GIT_URL}/hysds/${PACKAGE}.git
 fi
-cd $OPS/$PACKAGE/third_party/celery-v4.2.1
-pip install -e .
 cd $OPS/$PACKAGE
 pip install -e .
 if [ "$?" -ne 0 ]; then
