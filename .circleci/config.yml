@@ -19,7 +19,7 @@ jobs:
           command: |
             echo "GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN}" > $HOME/.git_oauth_token
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            ./build_release.sh $CIRCLE_BRANCH hysds master
+            ./build_develop.sh hysds
       - persist_to_workspace:
           root: images
           paths:
@@ -101,9 +101,9 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - master
     jobs:
       - build-periodically:
           filters:
             branches:
-              only: develop
+              only: master
