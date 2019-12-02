@@ -12,7 +12,6 @@ services:
       - "8085:8085"
       - "9001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${DATA_DIR}/work:/data/work"
       - "${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc"

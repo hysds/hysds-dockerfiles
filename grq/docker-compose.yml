@@ -12,7 +12,6 @@ services:
       - "8879:8879"
       - "9001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/grq/etc:/home/ops/sciflo/etc"
       - "${HYSDS_HOME}/grq/log:/home/ops/sciflo/log"
