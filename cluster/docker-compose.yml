@@ -76,7 +76,6 @@ services:
       - "20443:443"
       - "29001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/metrics/etc:/home/ops/mozart/etc"
       - "${HYSDS_HOME}/datasets.json:/home/ops/mozart/etc/datasets.json"
@@ -135,7 +134,6 @@ services:
       - "38879:8879"
       - "39001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/grq/etc:/home/ops/sciflo/etc"
       - "${HYSDS_HOME}/datasets.json:/home/ops/sciflo/etc/datasets.json"
@@ -191,7 +189,6 @@ services:
       - "46224:46224"
       - "46224:46224/udp"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc"
       - "${HYSDS_HOME}/datasets.json:/home/ops/verdi/etc/datasets.json"
@@ -215,7 +212,6 @@ services:
       - "48081:8080"
       - "49002:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/ci/etc:/home/ops/verdi/etc"
       - "${HYSDS_HOME}/ci/log:/home/ops/verdi/log"
