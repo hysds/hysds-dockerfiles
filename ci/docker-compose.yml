@@ -11,7 +11,6 @@ services:
       - "8080:8080"
       - "9001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/ci/etc:/home/ops/verdi/etc"
       - "${HYSDS_HOME}/ci/log:/home/ops/verdi/log"

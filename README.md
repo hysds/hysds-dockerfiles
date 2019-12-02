@@ -113,10 +113,13 @@ docker tag hysds/mozart:<YYYYMMDD> hysds/mozart:latest
 ```
 docker run -d --hostname mozart --name mozart --link mozart-rabbitmq:rabbitmq \
        --link mozart-redis:redis --link mozart-elasticsearch:elasticsearch -p 80:80 \
-       -p 443:443 -p 5555:5555 -p 8888:8888 -p 9001:9001 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-       -v /data/mozart/etc:/home/ops/mozart/etc -v /data/mozart/log:/home/ops/mozart/log \
-       -v /home/ops/.aws:/home/ops/.aws -v /home/ops/.boto:/home/ops/.boto \
-       -v /home/ops/.s3cfg:/home/ops/.s3cfg --volumes-from mozart-redis \
+       -p 443:443 -p 5555:5555 -p 8888:8888 -p 9001:9001 \
+       -v /data/mozart/etc:/home/ops/mozart/etc \
+       -v /data/mozart/log:/home/ops/mozart/log \
+       -v /home/ops/.aws:/home/ops/.aws \
+       -v /home/ops/.boto:/home/ops/.boto \
+       -v /home/ops/.s3cfg:/home/ops/.s3cfg \
+       --volumes-from mozart-redis \
        -v /var/run/docker.sock:/var/run/docker.sock hysds/mozart:<YYYYMMDD>
 ```
 
@@ -166,8 +169,9 @@ docker tag hysds/metrics:<YYYYMMDD> hysds/metrics:latest
 ```
 docker run -d --hostname metrics --name metrics --link metrics-redis:redis \
        --link metrics-elasticsearch:elasticsearch -p 80:80  -p 443:443 -p 5555:5555 \
-       -p 8888:8888 -p 9001:9001 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-       -v /data/metrics/etc:/home/ops/metrics/etc -v /data/metrics/log:/home/ops/metrics/log \
+       -p 8888:8888 -p 9001:9001 \
+       -v /data/metrics/etc:/home/ops/metrics/etc \
+       -v /data/metrics/log:/home/ops/metrics/log \
        -v /home/ops/.aws:/home/ops/.aws -v /home/ops/.boto:/home/ops/.boto \
        -v /home/ops/.s3cfg:/home/ops/.s3cfg --volumes-from metrics-redis \
        -v /var/run/docker.sock:/var/run/docker.sock hysds/metrics:<YYYYMMDD>
@@ -213,8 +217,9 @@ docker tag hysds/grq:<YYYYMMDD> hysds/grq:latest
 ```
 docker run -d --hostname grq --name grq --link grq-redis:redis \
        --link grq-elasticsearch:elasticsearch -p 80:80  -p 443:443 -p 5555:5555 \
-       -p 8888:8888 -p 9001:9001 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-       -v /data/grq/etc:/home/ops/sciflo/etc -v /data/grq/log:/home/ops/sciflo/log \
+       -p 8888:8888 -p 9001:9001 \
+       -v /data/grq/etc:/home/ops/sciflo/etc \
+       -v /data/grq/log:/home/ops/sciflo/log \
        -v /home/ops/.aws:/home/ops/.aws -v /home/ops/.boto:/home/ops/.boto \
        -v /home/ops/.s3cfg:/home/ops/.s3cfg -v /var/run/docker.sock:/var/run/docker.sock \
        hysds/grq:<YYYYMMDD>
@@ -257,8 +262,9 @@ docker tag hysds/verdi:<YYYYMMDD> hysds/verdi:latest
 3. Run verdi via docker:
 ```
 docker run -d --hostname verdi --name verdi -p 80:80  -p 443:443 -p 8085:8085 \
-       -p 9001:9001 -p 46224:46224 -p 46224:26224/udp -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-       -v /data/verdi/etc:/home/ops/verdi/etc -v /data/verdi/log:/home/ops/verdi/log \
+       -p 9001:9001 -p 46224:46224 -p 46224:26224/udp \
+       -v /data/verdi/etc:/home/ops/verdi/etc \
+       -v /data/verdi/log:/home/ops/verdi/log \
        -v /home/ops/.aws:/home/ops/.aws -v /home/ops/.boto:/home/ops/.boto \
        -v /home/ops/.s3cfg:/home/ops/.s3cfg -v /var/run/docker.sock:/var/run/docker.sock \
        hysds/verdi:<YYYYMMDD>
@@ -301,8 +307,8 @@ docker tag hysds/ci:<YYYYMMDD> hysds/ci:latest
 3. Run CI via docker:
 ```
 docker run -d --hostname ci --name ci -p 80:80  -p 443:443 -p 8080:8080 \
-       -p 9001:9001 -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-       -v /data/verdi/etc:/home/ops/verdi/etc -v /data/verdi/log:/home/ops/verdi/log \
+       -p 9001:9001 -v /data/verdi/etc:/home/ops/verdi/etc \
+       -v /data/verdi/log:/home/ops/verdi/log \
        -v /home/ops/.aws:/home/ops/.aws -v /home/ops/.boto:/home/ops/.boto \
        -v /home/ops/.s3cfg:/home/ops/.s3cfg -v /var/run/docker.sock:/var/run/docker.sock \
        hysds/ci:<YYYYMMDD>

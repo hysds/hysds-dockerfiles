@@ -10,7 +10,6 @@ services:
       - "443:443"
       - "9001:9001"
     volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "${HYSDS_HOME}/metrics/etc:/home/ops/mozart/etc"
       - "${HYSDS_HOME}/metrics/log:/home/ops/mozart/log"
