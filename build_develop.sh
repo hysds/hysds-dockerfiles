@@ -101,9 +101,11 @@ for i in verdi pge-base; do
   fi
 done
 
-# export verdi
+# export verdi and docker registry
 cd $IMG_DIR
 docker save hysds/verdi:${RELEASE} > hysds-verdi-${RELEASE}.tar; echo "done saving"; pigz -f hysds-verdi-${RELEASE}.tar
+docker pull registry:2
+docker save registry:2 > docker-registry-2.tar; echo "done saving"; pigz -f docker-registry-2.tar
 cd -
 
 # build hysds components
