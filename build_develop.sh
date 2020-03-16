@@ -109,7 +109,8 @@ mkdir -p $IMG_DIR
 #cd -
 #
 # build hysds components
-for i in mozart metrics grq cont_int; do
+#for i in mozart metrics grq cont_int; do
+for i in grq cont_int; do
   echo "#############################"
   echo "Building hysds/$i"
   echo "#############################"
