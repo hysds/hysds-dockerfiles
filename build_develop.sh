@@ -82,46 +82,46 @@ mkdir -p $IMG_DIR
 #echo "#############################"
 #docker build --rm --force-rm -t hysds/rabbitmq:${RELEASE} -f Dockerfile.hysds-rabbitmq . || exit 1
 #docker push hysds/rabbitmq:${RELEASE} || exit 1
-
-# build worker hysds components
-echo "#######################################"
-echo "Building hysds/pge-base and hysds/verdi"
-echo "#######################################"
-cd $TMP_DIR
-git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
-cd verdi
-./build_docker.sh ${RELEASE} || exit 1
-cd ..
-rm -rf verdi
-cd $BASE_PATH
-for i in verdi pge-base; do
-  docker push hysds/${i}:${RELEASE} || exit 1
-  if [ "$i" = "pge-base" ]; then
-    docker push hysds/cuda-${i}:${RELEASE} || exit 1
-  fi
-done
-
-# export verdi and docker registry
-cd $IMG_DIR
-docker save hysds/verdi:${RELEASE} > hysds-verdi-${RELEASE}.tar; echo "done saving"; pigz -f hysds-verdi-${RELEASE}.tar
+#
+## build worker hysds components
+#echo "#######################################"
+#echo "Building hysds/pge-base and hysds/verdi"
+#echo "#######################################"
+#cd $TMP_DIR
+#git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
+#cd verdi
+#./build_docker.sh ${RELEASE} || exit 1
+#cd ..
+#rm -rf verdi
+#cd $BASE_PATH
+#for i in verdi pge-base; do
+#  docker push hysds/${i}:${RELEASE} || exit 1
+#  if [ "$i" = "pge-base" ]; then
+#    docker push hysds/cuda-${i}:${RELEASE} || exit 1
+#  fi
+#done
+#
+## export verdi and docker registry
+#cd $IMG_DIR
+#docker save hysds/verdi:${RELEASE} > hysds-verdi-${RELEASE}.tar; echo "done saving"; pigz -f hysds-verdi-${RELEASE}.tar
 #docker pull registry:2
 #docker save registry:2 > docker-registry-2.tar; echo "done saving"; pigz -f docker-registry-2.tar
-cd -
+#cd -
 
-## build hysds components
-#for i in mozart metrics grq cont_int; do
-#  echo "#############################"
-#  echo "Building hysds/$i"
-#  echo "#############################"
-#  cd $TMP_DIR
-#  git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-${i} ${i}
-#  cd ${i}
-#  ./build_docker.sh ${RELEASE} || exit 1
-#  cd ..
-#  rm -rf ${i}
-#  cd $BASE_PATH
-#  docker push hysds/${i}:${RELEASE} || exit 1
-#done
+# build hysds components
+for i in mozart metrics grq cont_int; do
+  echo "#############################"
+  echo "Building hysds/$i"
+  echo "#############################"
+  cd $TMP_DIR
+  git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-${i} ${i}
+  cd ${i}
+  ./build_docker.sh ${RELEASE} || exit 1
+  cd ..
+  rm -rf ${i}
+  cd $BASE_PATH
+  docker push hysds/${i}:${RELEASE} || exit 1
+done
 
 # clean temp dir
 rm -rf $TMP_DIR
