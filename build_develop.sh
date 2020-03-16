@@ -4,14 +4,14 @@
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <org>"
-  echo "e.g.: $0 hysds"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <org> <branch>"
+  echo "e.g.: $0 hysds develop"
   exit 1
 fi
 ORG=$1
-RELEASE=develop
-BRANCH=develop
+RELEASE=$2
+BRANCH=$2
 
 # get uid and gid
 ID=$(id -u)
