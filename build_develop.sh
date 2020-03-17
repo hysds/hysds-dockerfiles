@@ -10,8 +10,14 @@ if [ "$#" -ne 2 ]; then
   exit 1
 fi
 ORG=$1
-RELEASE=$2
 BRANCH=$2
+RELEASE=$BRANCH
+
+# get puppet repo branch for docker builds
+PUPPET_DOCKER_BRANCH="docker"
+if [ "$BRANCH" = "develop-es7" ]; then
+  PUPPET_DOCKER_BRANCH="docker-es7"
+fi
 
 # get uid and gid
 ID=$(id -u)
@@ -22,7 +28,7 @@ echo "ID is $ID"
 echo "GID is $GID"
 
 # pull latest docker.io centos, rabbitmq and elasticsearch
-docker pull docker.io/elasticsearch:1.7 || exit 1
+docker pull docker.io/elasticsearch:7.1.1 || exit 1
 docker pull docker.io/rabbitmq:3-management || exit 1
 docker pull docker.io/centos:7 || exit 1
 docker tag docker.io/centos:7 docker.io/centos:latest || exit 1
@@ -41,7 +47,7 @@ mkdir -p $IMG_DIR
 echo "#############################"
 echo "Building hysds/base"
 echo "#############################"
-git clone --single-branch -b develop https://github.com/${ORG}/puppet-hysds_base.git hysds_base
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_base.git hysds_base
 cd hysds_base
 ./build_docker.sh ${RELEASE} ${ORG} ${BRANCH} || exit 1
 docker push hysds/base:${RELEASE} || exit 1
@@ -53,7 +59,7 @@ rm -rf hysds_base
 echo "#############################"
 echo "Building hysds/dev"
 echo "#############################"
-git clone --single-branch -b develop https://github.com/${ORG}/puppet-hysds_dev.git hysds_dev
+git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_dev.git hysds_dev
 cd hysds_dev
 ./build_docker.sh ${RELEASE} ${ORG} ${BRANCH} || exit 1
 docker push hysds/dev:${RELEASE} || exit 1
@@ -88,7 +94,7 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
+git clone -b ${PUPPET_DOCKER_BRANCH} --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${RELEASE} || exit 1
 cd ..
@@ -114,7 +120,7 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker-es7 --single-branch https://github.com/${ORG}/puppet-${i} ${i}
+  git clone -b ${PUPPET_DOCKER_BRANCH} --single-branch https://github.com/${ORG}/puppet-${i} ${i}
   cd ${i}
   ./build_docker.sh ${RELEASE} || exit 1
   cd ..
