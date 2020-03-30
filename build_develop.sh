@@ -4,14 +4,20 @@
 BASE_PATH=$(dirname "${BASH_SOURCE}")
 BASE_PATH=$(cd "${BASE_PATH}"; pwd)
 
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <org>"
-  echo "e.g.: $0 hysds"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <org> <branch>"
+  echo "e.g.: $0 hysds develop"
   exit 1
 fi
 ORG=$1
-RELEASE=develop
-BRANCH=develop
+BRANCH=$2
+RELEASE=$BRANCH
+
+# get puppet repo branch for docker builds
+PUPPET_DOCKER_BRANCH="docker"
+if [ "$BRANCH" = "develop-es7" ]; then
+  PUPPET_DOCKER_BRANCH="docker-es7"
+fi
 
 # get uid and gid
 ID=$(id -u)
@@ -88,7 +94,7 @@ echo "#######################################"
 echo "Building hysds/pge-base and hysds/verdi"
 echo "#######################################"
 cd $TMP_DIR
-git clone -b docker --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
+git clone -b ${PUPPET_DOCKER_BRANCH} --single-branch https://github.com/${ORG}/puppet-verdi.git verdi
 cd verdi
 ./build_docker.sh ${RELEASE} || exit 1
 cd ..
@@ -114,7 +120,7 @@ for i in mozart metrics grq cont_int; do
   echo "Building hysds/$i"
   echo "#############################"
   cd $TMP_DIR
-  git clone -b docker --single-branch https://github.com/${ORG}/puppet-${i} ${i}
+  git clone -b ${PUPPET_DOCKER_BRANCH} --single-branch https://github.com/${ORG}/puppet-${i} ${i}
   cd ${i}
   ./build_docker.sh ${RELEASE} || exit 1
   cd ..
