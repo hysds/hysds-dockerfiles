@@ -89,7 +89,6 @@ workflows:
             branches:
               only:
                 - develop
-                - develop-es7
       - deploy:
           requires:
             - build
@@ -97,7 +96,6 @@ workflows:
             branches:
               only:
                 - develop
-                - develop-es7
   weekly:
     triggers:
       - schedule:

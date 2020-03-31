@@ -15,9 +15,6 @@ RELEASE=$BRANCH
 
 # get puppet repo branch for docker builds
 PUPPET_DOCKER_BRANCH="docker"
-if [ "$BRANCH" = "develop-es7" ]; then
-  PUPPET_DOCKER_BRANCH="docker-es7"
-fi
 
 # get uid and gid
 ID=$(id -u)
