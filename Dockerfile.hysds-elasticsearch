@@ -1,9 +1,9 @@
-FROM docker.io/elasticsearch:1.7
+FROM docker.io/elasticsearch:7.1.1
 
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="ElasticSearch image for HySDS"
 
 # install head and kopf plugins
-RUN set -ex \
- && /usr/share/elasticsearch/bin/plugin --install lmenezes/elasticsearch-kopf/1.2 \
- && /usr/share/elasticsearch/bin/plugin --install mobz/elasticsearch-head
+#RUN set -ex \
+# && /usr/share/elasticsearch/bin/plugin --install lmenezes/elasticsearch-kopf/1.2 \
+# && /usr/share/elasticsearch/bin/plugin --install mobz/elasticsearch-head

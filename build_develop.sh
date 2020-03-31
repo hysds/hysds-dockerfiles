@@ -15,9 +15,6 @@ RELEASE=$BRANCH
 
 # get puppet repo branch for docker builds
 PUPPET_DOCKER_BRANCH="docker"
-if [ "$BRANCH" = "develop-es1" ]; then
-  PUPPET_DOCKER_BRANCH="docker-es1"
-fi
 
 # get uid and gid
 ID=$(id -u)
@@ -28,7 +25,7 @@ echo "ID is $ID"
 echo "GID is $GID"
 
 # pull latest docker.io centos, rabbitmq and elasticsearch
-docker pull docker.io/elasticsearch:1.7 || exit 1
+docker pull docker.io/elasticsearch:7.1.1 || exit 1
 docker pull docker.io/rabbitmq:3-management || exit 1
 docker pull docker.io/centos:7 || exit 1
 docker tag docker.io/centos:7 docker.io/centos:latest || exit 1
