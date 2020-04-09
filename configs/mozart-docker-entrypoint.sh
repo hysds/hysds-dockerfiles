@@ -41,14 +41,6 @@ fi
 # create user rules index
 $HOME/mozart/ops/mozart/scripts/create_user_rules_index.py || :
 
-# ensure db for figaro exists
-if [ ! -d "$HOME/mozart/ops/figaro/data" ]; then
-  mkdir -p $HOME/mozart/ops/figaro/data
-fi
-if [ -e `readlink $HOME/mozart/ops/figaro/settings.cfg` ]; then
-  $HOME/mozart/ops/figaro/db_create.py
-fi
-
 if [[ "$#" -eq 1  && "$@" == "supervisord" ]]; then
   set -- supervisord -n
 else
