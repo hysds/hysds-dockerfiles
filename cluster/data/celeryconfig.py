@@ -65,7 +65,6 @@ ON_DEMAND_JOB_QUEUE = "on_demand_job"
 USER_RULES_JOB_INDEX = "user_rules"
 STATUS_ALIAS = "job_status"
 
-TOSCA_URL = "https://localhost:30443/search/"
 GRQ_URL = "http://grq:8878/api/v0.1"
 GRQ_REST_URL = "http://grq:8878/api/v0.1"
 GRQ_UPDATE_URL = "http://grq:8878/api/v0.1/grq/dataset/index"
