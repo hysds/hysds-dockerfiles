@@ -48,7 +48,9 @@ git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_ba
 cd hysds_base
 ./build_docker.sh ${RELEASE} ${ORG} ${BRANCH} || exit 1
 docker push hysds/base:${RELEASE} || exit 1
+docker tag hysds/base:${RELEASE} hysds/base:latest || exit 1
 docker push hysds/cuda-base:${RELEASE} || exit 1
+docker tag hysds/cuda-base:${RELEASE} hysds/cuda-base:latest || exit 1
 cd ..
 rm -rf hysds_base
 
@@ -60,7 +62,9 @@ git clone --single-branch -b ${BRANCH} https://github.com/${ORG}/puppet-hysds_de
 cd hysds_dev
 ./build_docker.sh ${RELEASE} ${ORG} ${BRANCH} || exit 1
 docker push hysds/dev:${RELEASE} || exit 1
+docker tag hysds/dev:${RELEASE} hysds/dev:latest || exit 1
 docker push hysds/cuda-dev:${RELEASE} || exit 1
+docker tag hysds/cuda-dev:${RELEASE} hysds/cuda-dev:latest || exit 1
 cd ..
 rm -rf hysds_dev
 cd $BASE_PATH
