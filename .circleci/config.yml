@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: docker:19.03-git
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - setup_remote_docker:
@@ -27,6 +30,9 @@ jobs:
   build-periodically:
     docker:
       - image: docker:19.03-git
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - setup_remote_docker:
@@ -52,6 +58,9 @@ jobs:
   deploy:
     docker:
       - image: alpine:latest
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - run:
           name: Install dependencies
@@ -85,11 +94,17 @@ workflows:
   build-deploy:
     jobs:
       - build:
+          context:
+            - docker-hub-creds
+            - git-oauth-token
           filters:
             branches:
               only:
                 - develop
       - deploy:
+          context:
+            - docker-hub-creds
+            - git-oauth-token
           requires:
             - build
           filters:
@@ -106,6 +121,9 @@ workflows:
                 - master
     jobs:
       - build-periodically:
+          context:
+            - docker-hub-creds
+            - git-oauth-token
           filters:
             branches:
               only: master
