@@ -81,12 +81,12 @@ jobs:
             file=hysds-verdi-${CIRCLE_BRANCH}.tar.gz
             curl -H "Authorization: token $GIT_OAUTH_TOKEN" -H \
               "Content-type: $(file -b --mime-type ${file})" \
-              --data-binary @${file} \
+              -T "${file}" -XPOST \
               "https://uploads.github.com/repos/${owner}/${repo}/releases/${release_id}/assets?name=${file}"
             file=docker-registry-2.tar.gz
             curl -H "Authorization: token $GIT_OAUTH_TOKEN" -H \
               "Content-type: $(file -b --mime-type ${file})" \
-              --data-binary @${file} \
+              -T "${file}" -XPOST \
               "https://uploads.github.com/repos/${owner}/${repo}/releases/${release_id}/assets?name=${file}"
 
 workflows:
