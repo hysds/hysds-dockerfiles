@@ -1,4 +1,4 @@
-FROM docker.io/elasticsearch:7.1.1
+FROM docker.io/elasticsearch:7.9.3
 
 MAINTAINER Gerald Manipon (pymonger) "pymonger@gmail.com"
 LABEL description="ElasticSearch image for HySDS"

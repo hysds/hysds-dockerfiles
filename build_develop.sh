@@ -25,7 +25,7 @@ echo "ID is $ID"
 echo "GID is $GID"
 
 # pull latest docker.io centos, rabbitmq and elasticsearch
-docker pull docker.io/elasticsearch:7.1.1 || exit 1
+docker pull docker.io/elasticsearch:7.9.3 || exit 1
 docker pull docker.io/rabbitmq:3-management || exit 1
 docker pull docker.io/centos:7 || exit 1
 docker tag docker.io/centos:7 docker.io/centos:latest || exit 1
