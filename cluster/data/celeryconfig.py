@@ -3,7 +3,7 @@ CELERY_RESULT_BACKEND = "redis://mozart-redis"
 
 CELERY_TASK_SERIALIZER = "msgpack"
 CELERY_RESULT_SERIALIZER = "msgpack"
-CELERY_ACCEPT_CONTENT = ["msgpack"]
+CELERY_ACCEPT_CONTENT = ["msgpack", "json"]
 CELERY_TIMEZONE = "US/Pacific-New"
 CELERY_ENABLE_UTC = True
 
