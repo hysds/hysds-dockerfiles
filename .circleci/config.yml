@@ -618,7 +618,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_base:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -628,7 +627,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_dev:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -640,7 +638,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_cuda_base:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -650,7 +647,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_cuda_dev:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -662,7 +658,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_verdi_pge_base:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -677,7 +672,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_mozart:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -690,7 +684,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_metrics:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -703,7 +696,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_grq:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
@@ -716,7 +708,6 @@ workflows:
             branches:
               only: develop
       - build-hysds_cont_int:
-          branch: $CIRCLE_BRANCH
           build_tag: ""
           final_tag: $CIRCLE_BRANCH
           context:
