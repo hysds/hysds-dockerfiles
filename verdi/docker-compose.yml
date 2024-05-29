@@ -10,8 +10,6 @@ services:
       - AWS_METADATA_SERVICE_TIMEOUT=5
       - AWS_METADATA_SERVICE_NUM_ATTEMPTS=5
     ports:
-      - "80:80"
-      - "443:443"
       - "8085:8085"
       - "9001:9001"
     volumes:

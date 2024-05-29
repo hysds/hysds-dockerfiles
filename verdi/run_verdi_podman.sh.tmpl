@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# set some environment variables
+export HOST_VERDI_HOME={{ HOST_VERDI_HOME or '$HOME' }}
+
+# Start the socket service
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+loginctl enable-linger $USER
+systemctl --user --now enable podman.socket
+systemctl --user status podman.socket
+export PODMAN_SOCK=/run/user/$UID/podman/podman.sock
+
+# Run podman
+podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
+-e HOST_VERDI_HOME=$HOST_VERDI_HOME \
+-e HOST_USER=$(whoami) \
+-p 8085:8085 \
+-p 9001:9001 \
+--name=verdi \
+--userns=keep-id \
+--security-opt label=disable \
+-u $UID:$(id -g) \
+-v ${PODMAN_SOCK}:${PODMAN_SOCK} \
+-v ${DATA_DIR}/work:/data/work \
+-v ${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc \
+-v ${HYSDS_HOME}/verdi/log:/home/ops/verdi/log \
+-v ${HYSDS_HOME}/verdi/run:/home/ops/verdi/run \
+-v $HOME/.boto:/home/ops/.boto \
+-v $HOME/.netrc:/home/ops/.netrc \
+-v $HOME/.s3cfg:/home/ops/.s3cfg \
+-v $HOME/.aws:/home/ops/.aws \
+hysds/verdi
