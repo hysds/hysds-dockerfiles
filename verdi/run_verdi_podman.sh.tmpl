@@ -14,12 +14,11 @@ export PODMAN_SOCK=/run/user/$UID/podman/podman.sock
 podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
 -e HOST_VERDI_HOME=$HOST_VERDI_HOME \
 -e HOST_USER=$(whoami) \
+-e HOST_UID=${UID} \
 -p 8085:8085 \
 -p 9001:9001 \
 --name=verdi \
---userns=keep-id \
 --security-opt label=disable \
--u $UID:$(id -g) \
 -v ${PODMAN_SOCK}:${PODMAN_SOCK} \
 -v ${DATA_DIR}/work:/data/work \
 -v ${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc \
