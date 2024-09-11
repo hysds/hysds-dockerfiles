@@ -24,8 +24,8 @@ podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
 -v ${HYSDS_HOME}/verdi/etc:/home/ops/verdi/etc \
 -v ${HYSDS_HOME}/verdi/log:/home/ops/verdi/log \
 -v ${HYSDS_HOME}/verdi/run:/home/ops/verdi/run \
--v $HOME/.boto:/home/ops/.boto \
--v $HOME/.netrc:/home/ops/.netrc \
--v $HOME/.s3cfg:/home/ops/.s3cfg \
--v $HOME/.aws:/home/ops/.aws \
+-v $HOME/.boto:/root/.boto \
+-v $HOME/.netrc:/root/.netrc \
+-v $HOME/.s3cfg:/root/.s3cfg \
+-v $HOME/.aws:/root/.aws \
 hysds/verdi
