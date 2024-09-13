@@ -2,7 +2,7 @@
 set -e
 
 # set HOME explicitly
-export HOME=/home/ops
+export HOME=/root
 
 # wait for rabbitmq, redis, and ES
 /wait-for-it.sh -t 30 mozart-rabbitmq:15672

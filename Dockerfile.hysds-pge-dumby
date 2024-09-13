@@ -1,15 +1,15 @@
 FROM hysds/pge-base:latest
 
 # provision dumby PGE
- COPY dumby /home/ops/verdi/ops/dumby
+ COPY dumby /root/verdi/ops/dumby
 RUN set -ex \
  && yum update -y \
  && yum install -y ImageMagick \
  && yum clean all
 
 # set entrypoint
-USER ops
-WORKDIR /home/ops
+USER root
+WORKDIR /root
 COPY configs/pge-docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash", "--login"]

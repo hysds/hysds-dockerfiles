@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERDI_DIR=/home/ops/verdi
+VERDI_DIR=/root/verdi
 WORK_DIR=/data/work
 
 
