@@ -5,7 +5,6 @@ services:
     container_name: verdi
     image: hysds/verdi
     init: true
-    user: "${HOST_UID}:${HOST_GID}"
     environment:
       - AWS_METADATA_SERVICE_TIMEOUT=5
       - AWS_METADATA_SERVICE_NUM_ATTEMPTS=5
