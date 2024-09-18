@@ -20,7 +20,7 @@ podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
 --name=verdi \
 --security-opt label=disable \
 -v ${PODMAN_SOCK}:${PODMAN_SOCK} \
--v ${DATA_DIR}/work:/data/work \
+-v ${DATA_DIR}/work:${DATA_DIR}/work \
 -v ${HYSDS_HOME}/verdi/etc:/root/verdi/etc \
 -v ${HYSDS_HOME}/verdi/log:/root/verdi/log \
 -v ${HYSDS_HOME}/verdi/run:/root/verdi/run \

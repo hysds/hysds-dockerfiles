@@ -14,7 +14,7 @@ services:
       - "9001:9001"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "${DATA_DIR}/work:/data/work"
+      - "${DATA_DIR}/work:${DATA_DIR}/work"
       - "${HYSDS_HOME}/verdi/run:/root/verdi/run"
       - "${HYSDS_HOME}/verdi/log:/root/verdi/log"
       - "${HYSDS_HOME}/verdi/etc:/root/verdi/etc"
