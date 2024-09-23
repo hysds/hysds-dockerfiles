@@ -15,6 +15,7 @@ podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
 -e HOST_VERDI_HOME=$HOST_VERDI_HOME \
 -e HOST_USER=$(whoami) \
 -e HOST_UID=${UID} \
+-e AWS_CONFIG_FILE=/root/.aws/config \
 -p 8085:8085 \
 -p 9001:9001 \
 --name=verdi \

@@ -9,6 +9,7 @@ services:
     environment:
       - AWS_METADATA_SERVICE_TIMEOUT=5
       - AWS_METADATA_SERVICE_NUM_ATTEMPTS=5
+      - AWS_CONFIG_FILE=/root/.aws/config
     ports:
       - "8085:8085"
       - "9001:9001"
