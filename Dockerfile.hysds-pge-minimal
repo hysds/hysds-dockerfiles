@@ -1,11 +1,11 @@
 FROM hysds/pge-base:latest
 
 # provision PGE here, e.g.
-# COPY ariamh /home/ops/ariamh
+# COPY ariamh /root/ariamh
 
 # set entrypoint
 USER ops
-WORKDIR /home/ops
+WORKDIR /root
 COPY configs/pge-docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash", "--login"]

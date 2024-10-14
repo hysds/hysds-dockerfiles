@@ -19,8 +19,8 @@ RUN set -ex \
  && rm -f /tmp/idl706linux-hysds.x86.tar.gz
 
 # set entrypoint
-USER ops
-WORKDIR /home/ops
+USER root
+WORKDIR /root
 COPY configs/idl-docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash", "--login"]

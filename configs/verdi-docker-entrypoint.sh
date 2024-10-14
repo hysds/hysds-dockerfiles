@@ -2,7 +2,7 @@
 set -e
 
 # set HOME explicitly
-export HOME=/home/ops
+export HOME=/root
 
 # get group id
 GID=$(id -g)

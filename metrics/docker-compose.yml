@@ -11,12 +11,12 @@ services:
       - "9001:9001"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "${HYSDS_HOME}/metrics/etc:/home/ops/mozart/etc"
-      - "${HYSDS_HOME}/metrics/log:/home/ops/mozart/log"
-      - "${HOME}/.aws:/home/ops/.aws"
-      - "${HOME}/.boto:/home/ops/.boto"
-      - "${HOME}/.s3cfg:/home/ops/.s3cfg"
-      - "${HOME}/.netrc:/home/ops/.netrc"
+      - "${HYSDS_HOME}/metrics/etc:/root/mozart/etc"
+      - "${HYSDS_HOME}/metrics/log:/root/mozart/log"
+      - "${HOME}/.aws:/root/.aws"
+      - "${HOME}/.boto:/root/.boto"
+      - "${HOME}/.s3cfg:/root/.s3cfg"
+      - "${HOME}/.netrc:/root/.netrc"
     links:
       - redis
       - elasticsearch
