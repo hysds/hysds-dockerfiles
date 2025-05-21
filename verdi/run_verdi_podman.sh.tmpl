@@ -27,6 +27,7 @@ podman --remote --url unix:${PODMAN_SOCK} run -d --rm \
 -v ${HYSDS_HOME}/verdi/run:/root/verdi/run \
 -v ${HOST_VERDI_HOME}/.boto:/root/.boto \
 -v ${HOST_VERDI_HOME}/.netrc:/root/.netrc \
+-v ${HOST_VERDI_HOME}/.netrc-os:/root/.netrc-os \
 -v ${HOST_VERDI_HOME}/.s3cfg:/root/.s3cfg \
 -v ${HOST_VERDI_HOME}/.aws:/root/.aws \
 hysds/verdi
