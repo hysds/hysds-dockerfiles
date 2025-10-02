@@ -5,9 +5,10 @@ set -e
 export HOME=/root
 
 # wait for rabbitmq, redis, and ES
-/wait-for-it.sh -t 30 mozart-rabbitmq:15672
-/wait-for-it.sh -t 30 mozart-redis:6379
-/wait-for-it.sh -t 30 mozart-elasticsearch:9200
+/wait-for-it.sh -t 30 ${RABBITMQ_HOST:-mozart-rabbitmq}:${RABBITMQ_PORT:-15672}
+/wait-for-it.sh -t 30 ${REDIS_HOST:-mozart-redis}:${REDIS_PORT:-6379}
+/wait-for-it.sh -t 30 ${ES_HOST:-mozart-elasticsearch}:${ES_PORT:-9200}
+
 
 # get group id
 GID=$(id -g)
