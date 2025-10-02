@@ -5,8 +5,9 @@ set -e
 export HOME=/root
 
 # wait for redis and ES
-/wait-for-it.sh -t 30 metrics-redis:6379
-/wait-for-it.sh -t 30 metrics-elasticsearch:9200
+/wait-for-it.sh -t 30 ${REDIS_HOST:-metrics-redis}:${REDIS_PORT:-6379}
+/wait-for-it.sh -t 30 ${ES_HOST:-metrics-elasticsearch}:${ES_PORT:-9200}
+
 
 # get group id
 GID=$(id -g)
