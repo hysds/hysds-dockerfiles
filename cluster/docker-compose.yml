@@ -27,11 +27,11 @@ services:
     links:
       - mozart-rabbitmq
       - mozart-redis
-      - mozart-elasticsearch
+      - mozart-opensearch
     depends_on:
       - mozart-rabbitmq
       - mozart-redis
-      - mozart-elasticsearch
+      - mozart-opensearch
   mozart-rabbitmq:
     image: hysds/rabbitmq
     hostname: mozart-rabbitmq
@@ -49,24 +49,32 @@ services:
       - "16379:6379"
     volumes:
       - "${HYSDS_HOME}/mozart/redis:/data/redis"
-  mozart-elasticsearch:
-    image: hysds/elasticsearch
-    hostname: mozart-elasticsearch
-    container_name: mozart-elasticsearch
+  mozart-opensearch:
+    image: opensearchproject/opensearch:3.4.0
+    hostname: mozart-opensearch
+    container_name: mozart-opensearch
     ports:
       - "19200:9200"
-      - "19300:9300"
+      - "19600:9600"
     volumes:
-      - "${HYSDS_HOME}/mozart/elasticsearch/config:/usr/share/elasticsearch/config"
-      - "${HYSDS_HOME}/mozart/elasticsearch/data:/usr/share/elasticsearch/data"
+      - "${HYSDS_HOME}/mozart/opensearch/config:/usr/share/opensearch/config"
+      - "${HYSDS_HOME}/mozart/opensearch/data:/usr/share/opensearch/data"
     environment:
-      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
-      - MAX_LOCKED_MEMORY=unlimited
-    command: [ "elasticsearch",
-               "-Des.node.name='mozart-elasticsearch'",
-               "-Des.cluster.name='resource_cluster'",
-               "-Des.bootstrap.mlockall=true",
-               "-Des.network.host=0" ]
+      - OPENSEARCH_JAVA_OPTS=-Xms${OS_HEAP_SIZE:-512}m -Xmx${OS_HEAP_SIZE:-512}m
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - DISABLE_SECURITY_PLUGIN=false
+      - discovery.type=single-node
+      - cluster.name=resource_cluster
+      - node.name=mozart-opensearch
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
   metrics:
     hostname: metrics
     container_name: metrics
@@ -90,10 +98,10 @@ services:
       - metrics-redis
     links:
       - metrics-redis
-      - metrics-elasticsearch
+      - metrics-opensearch
     depends_on:
       - metrics-redis
-      - metrics-elasticsearch
+      - metrics-opensearch
   metrics-redis:
     image: hysds/redis
     hostname: metrics-redis
@@ -102,27 +110,34 @@ services:
       - "26379:6379"
     volumes:
       - "${HYSDS_HOME}/metrics/redis:/data/redis"
-  metrics-elasticsearch:
-    image: hysds/elasticsearch
-    hostname: metrics-elasticsearch
-    container_name: metrics-elasticsearch
+  metrics-opensearch:
+    image: opensearchproject/opensearch:3.4.0
+    hostname: metrics-opensearch
+    container_name: metrics-opensearch
     ports:
       - "29200:9200"
-      - "29300:9300"
+      - "29600:9600"
     volumes:
-      - "${HYSDS_HOME}/metrics/elasticsearch/config:/usr/share/elasticsearch/config"
-      - "${HYSDS_HOME}/metrics/elasticsearch/data:/usr/share/elasticsearch/data"
+      - "${HYSDS_HOME}/metrics/opensearch/config:/usr/share/opensearch/config"
+      - "${HYSDS_HOME}/metrics/opensearch/data:/usr/share/opensearch/data"
     environment:
-      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
-      - MAX_LOCKED_MEMORY=unlimited
-    command: [ "elasticsearch",
-               "-Des.node.name='metrics-elasticsearch'",
-               "-Des.cluster.name='metrics_cluster'",
-               "-Des.bootstrap.mlockall=true",
-               "-Des.network.host=0", 
-               "-Des.index.number_of_shards=16",
-               "-Des.http.cors.enabled=true",
-               "-Des.http.cors.allow-origin=http://localhost:20080" ]
+      - OPENSEARCH_JAVA_OPTS=-Xms${OS_HEAP_SIZE:-512}m -Xmx${OS_HEAP_SIZE:-512}m
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - DISABLE_SECURITY_PLUGIN=false
+      - discovery.type=single-node
+      - cluster.name=metrics_cluster
+      - node.name=metrics-opensearch
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:20080
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
   grq:
     hostname: grq
     container_name: grq
@@ -145,10 +160,10 @@ services:
       - "${HOME}/.netrc:/home/ops/.netrc"
     links:
       - grq-redis
-      - grq-elasticsearch
+      - grq-opensearch
     depends_on:
       - grq-redis
-      - grq-elasticsearch
+      - grq-opensearch
   grq-redis:
     image: hysds/redis
     hostname: grq-redis
@@ -157,26 +172,32 @@ services:
       - "36379:6379"
     volumes:
       - "${HYSDS_HOME}/grq/redis:/data/redis"
-  grq-elasticsearch:
-    image: hysds/elasticsearch
-    hostname: grq-elasticsearch
-    container_name: grq-elasticsearch
+  grq-opensearch:
+    image: opensearchproject/opensearch:3.4.0
+    hostname: grq-opensearch
+    container_name: grq-opensearch
     ports:
       - "39200:9200"
-      - "39300:9300"
+      - "39600:9600"
     volumes:
-      - "${HYSDS_HOME}/grq/elasticsearch/config:/usr/share/elasticsearch/config"
-      - "${HYSDS_HOME}/grq/elasticsearch/data:/usr/share/elasticsearch/data"
+      - "${HYSDS_HOME}/grq/opensearch/config:/usr/share/opensearch/config"
+      - "${HYSDS_HOME}/grq/opensearch/data:/usr/share/opensearch/data"
     environment:
-      - ES_HEAP_SIZE=${ES_HEAP_SIZE}m
-      - MAX_LOCKED_MEMORY=unlimited
-    command: [ "elasticsearch",
-               "-Des.node.name='grq-elasticsearch'",
-               "-Des.cluster.name='products_cluster'",
-               "-Des.bootstrap.mlockall=true",
-               "-Des.network.host=0", 
-               "-Des.index.number_of_shards=16",
-               "-Des.script.engine.groovy.inline.aggs=on" ]
+      - OPENSEARCH_JAVA_OPTS=-Xms${OS_HEAP_SIZE:-512}m -Xmx${OS_HEAP_SIZE:-512}m
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - DISABLE_SECURITY_PLUGIN=false
+      - discovery.type=single-node
+      - cluster.name=products_cluster
+      - node.name=grq-opensearch
+      - bootstrap.memory_lock=true
+      - network.host=0.0.0.0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
   verdi:
     hostname: verdi
     container_name: verdi
